@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+@import './create.scss';
+@import './home.scss';
+@import './navbar.scss';
+@import './play.scss';
+@import './results.scss';
+@import './uploads.scss';
+@import './winner.scss';
+
+html,
+body {
+  font-family: 'Roboto', sans-serif; 
+  color: #666666;
+  background-color: #f7f8fa; 
+  margin: 0px;
+}
+
+p { margin: 0px; }
+
+a { 
+  text-decoration: none; 
+  color: #444444; 
+  cursor: pointer; 
+}
+
+.loader {
+  width: 64px;
+}
