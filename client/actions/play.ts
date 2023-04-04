@@ -41,3 +41,15 @@ export function fetchError(errMessage: string): PlayAction {
     payload: errMessage
   }
 }
+
+export function fetchPlayContent():ThunkAction {
+  return dispatch => {
+    dispatch(fetchPlayContentPending())
+    return getWinningImage().then(image => {
+      dispatch(fetchPlayContentSuccess(image))
+    })
+    .catch(err => {
+      dispatch(fetchError(err.message))
+    })
+  }
+}
