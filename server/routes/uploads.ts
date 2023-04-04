@@ -6,7 +6,7 @@ import { uploads } from '../db/uploads'
 
 const router = Router()
 
-router.get('/',checkJwt,async (req: JwtRequest, res)=> {
+router.get('/:auth0Id',checkJwt,async (req: JwtRequest, res)=> {
 
   // router.get('/:auth0Id',async (req, res)=> {
 try{
