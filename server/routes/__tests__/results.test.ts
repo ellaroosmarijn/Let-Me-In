@@ -1,6 +1,8 @@
 import request from 'supertest'
 import server from '../../server'
 import { getResults } from '../../db/results'
+import checkJwt, {JwtRequest} from '../../auth0'
+jest.mock('../../auth0.ts')
 
 jest.mock('../../db/results')
 
@@ -18,8 +20,17 @@ const getResultsMockData = [
     auth0Id: '1',
     imageId: '4',
     created: 'dateString',
+    imageUrl: 'image string',
   },
 ]
+
+jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
+  const reqAuth = req as JwtRequest
+  reqAuth.auth = {
+    sub: 'auth0|123',
+  }
+  next()
+})
 
 describe('/GET /api/v1/results/', () => {
   it('should recieve data from results table', async () => {
