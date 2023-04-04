@@ -1,5 +1,5 @@
-import connection from "../connection";
-import { uploads } from "../uploads";
+import connection from '../connection'
+import { getUploadsByUploaderId } from '../uploads'
 
 beforeAll(() => {
   return connection.migrate.latest()
@@ -15,74 +15,47 @@ afterAll(() => {
 
 describe('getUserImage', () => {
   it('get the user uploaded images from the database', async () => {
-    
-   // Arrange
-   expect.assertions(2)
+    // Arrange
+    expect.assertions(2)
 
-   const user1ID='1'
-   const user2ID='2'
-  
-  // Act
-  // first we get the user imges Uploads('1' || "2")
-  const user1 = await uploads(user1ID)
-  const user2 = await uploads(user2ID)
+    const user1Id = '1'
+    const user2Id = '2'
 
-  // console.log(user1)
-  // Assert
-  // we can check for length 
-  expect(user1).toHaveLength(2)
-  expect(user2).toHaveLength(2)
+    // Act
+    const user1 = await getUploadsByUploaderId(user1Id)
+    const user2 = await getUploadsByUploaderId(user2Id)
 
+    // Assert
+    expect(user1).toHaveLength(2)
+    expect(user2).toHaveLength(2)
+  })
 
-  }) 
-
-  it('get image with properties right', async()=>{
-
+  it('get image with properties right', async () => {
     expect.assertions(3)
-    const user1ID='1'
-    // const user2ID='2'
-   
-    const user = await uploads(user1ID)
-    const obj1= {
-      id: 1,
-      uploaderId: '1',
-      name: 'Let Me In',
-      description: 'LET ME INNNNNNNNNNNNNNN',
-      imageUrl: 'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif'
-    }
-    const obj2=  {
-      id: 2,
-      uploaderId: '1',
-      name: 'Judge Judy',
-      description: 'Judge Judy time',
-      imageUrl: 'https://media.tenor.com/vTY0qobiAtsAAAAC/judge-judy-time.gif'
-    }
-    const userArray =  [
+    const user1Id = '1'
+
+    const user = await getUploadsByUploaderId(user1Id)
+    const userArray = [
       {
         id: 1,
         uploaderId: '1',
         name: 'Let Me In',
         description: 'LET ME INNNNNNNNNNNNNNN',
-        imageUrl: 'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif'
+        imageUrl:
+          'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif',
       },
       {
         id: 2,
         uploaderId: '1',
         name: 'Judge Judy',
         description: 'Judge Judy time',
-        imageUrl: 'https://media.tenor.com/vTY0qobiAtsAAAAC/judge-judy-time.gif'
-      }
+        imageUrl:
+          'https://media.tenor.com/vTY0qobiAtsAAAAC/judge-judy-time.gif',
+      },
     ]
 
-    expect(user[0]).toMatchObject(obj1)
-    expect(user[1]).toMatchObject(obj2)
+    expect(user[0]).toMatchObject(userArray[0])
+    expect(user[1]).toMatchObject(userArray[1])
     expect(user).toEqual(userArray)
-
   })
-
 })
-
-
-
-
-
