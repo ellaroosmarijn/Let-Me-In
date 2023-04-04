@@ -2,11 +2,11 @@ import { Router } from 'express'
 import { JwtRequest } from '../auth0'
 import checkJwt from '../auth0'
 
-import { uploads } from '../db/uploads'
+import { getUploadsByUploaderId } from '../db/uploads'
 
 const router = Router()
 
-router.get('/:auth0Id',checkJwt,async (req: JwtRequest, res)=> {
+router.get('/',checkJwt,async (req: JwtRequest, res)=> {
 
   // router.get('/:auth0Id',async (req, res)=> {
 try{
@@ -29,6 +29,5 @@ try{
 
 
 })
-
 
 export default router
