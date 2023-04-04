@@ -26,3 +26,12 @@ describe('addWinnerResults', () => {
     expect(resultAddedId[0]).toBe(7)
   })
 })
+
+describe('get result by ID', () => {
+  it('gets a speciic result that has a matching ID', async () => {
+    const id = 5
+    const resultId = await getById(id, connection)
+    expect(resultId[0].auth0_id).toBe('2')
+    expect(resultId[0].image_id).toBe(3)
+  })
+})
