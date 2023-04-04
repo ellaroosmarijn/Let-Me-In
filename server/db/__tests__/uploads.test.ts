@@ -18,11 +18,14 @@ describe('getUserImage', () => {
     
    // Arrange
    expect.assertions(2)
+
+   const user1ID='1'
+   const user2ID='2'
   
   // Act
   // first we get the user imges Uploads('1' || "2")
-  const user1 = await uploads('1')
-  const user2 = await uploads('2')
+  const user1 = await uploads(user1ID)
+  const user2 = await uploads(user2ID)
 
   // console.log(user1)
   // Assert
@@ -36,7 +39,10 @@ describe('getUserImage', () => {
   it('get image with properties right', async()=>{
 
     expect.assertions(3)
-    const user = await uploads('1')
+    const user1ID='1'
+    // const user2ID='2'
+   
+    const user = await uploads(user1ID)
     const obj1= {
       id: 1,
       uploaderId: '1',
