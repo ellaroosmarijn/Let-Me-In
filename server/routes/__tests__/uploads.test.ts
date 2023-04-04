@@ -1,18 +1,17 @@
 import request from 'supertest'
 import server from '../../server'
-import { uploads } from '../../db/uploads'
-
+import { getUploadsByUploaderId } from '../../db/uploads'
 import checkJwt, { JwtRequest } from '../../auth0'
 
 jest.mock('../../db/uploads')
 jest.mock('../../auth0')
 
 beforeEach(() => {
-  jest.resetAllMocks
+  jest.resetAllMocks()
 })
 
 afterAll(() => {
-  jest.restoreAllMocks
+  jest.restoreAllMocks()
 })
 
 const getMockUserUploads = [
@@ -45,7 +44,7 @@ describe('Get /api/v1/uploads/', () => {
       next()
     })
 
-    jest.mocked(uploads).mockResolvedValue(getMockUserUploads)
+    jest.mocked(getUploadsByUploaderId).mockResolvedValue(getMockUserUploads)
 
     // Act
     const response = await request(server).get('/api/v1/uploads/')
@@ -55,14 +54,21 @@ describe('Get /api/v1/uploads/', () => {
     expect(response.body).toEqual(getMockUserUploads)
   })
 
-
-
   it('should return status 500 and an error message when database fails.', async () => {
     // Arrange
     expect.assertions(1)
+    jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
+      const reqAuth = req as JwtRequest
+      reqAuth.auth = {
+        sub: 'auth0|123',
+      }
+      next()
+    })
 
     jest.spyOn(console, 'error').mockImplementation(() => {})
-    jest.mocked(uploads).mockRejectedValue(new Error('Mock error message'))
+    jest
+      .mocked(getUploadsByUploaderId)
+      .mockRejectedValue(new Error('Mock error message'))
 
     // Act
     const response = await request(server).get('/api/v1/uploads/')
@@ -76,14 +82,12 @@ describe('Get /api/v1/uploads/', () => {
     expect.assertions(2)
     jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
       const reqAuth = req as JwtRequest
-      reqAuth.auth = {
-     
-      }
+      reqAuth.auth = {}
       next()
     })
 
     jest.spyOn(console, 'error').mockImplementation(() => {})
-    jest.mocked(uploads).mockResolvedValue(getMockUserUploads)
+    jest.mocked(getUploadsByUploaderId).mockResolvedValue(getMockUserUploads)
 
     // Act
     const response = await request(server)
