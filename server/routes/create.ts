@@ -8,9 +8,10 @@ const router = Router()
 router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
+
     if (auth0Id) {
-      const response = db.addImage(req.body, auth0Id)
-      return res.json(response)
+      const result = await db.addImage(req.body, auth0Id)
+      return res.json(result)
     }
   } catch (err) {
     if (err instanceof Error) {
