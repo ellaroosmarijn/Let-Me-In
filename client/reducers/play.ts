@@ -12,7 +12,7 @@ const initialState: PlayState = {
   data: {image:
     {
       id: 1,
-      uploaderId: '1', 
+      uploaderId: '1',
       name: 'Let Me In',
       description: 'LET ME INNNNNNNNNNNNNNN',
       imageUrl:
