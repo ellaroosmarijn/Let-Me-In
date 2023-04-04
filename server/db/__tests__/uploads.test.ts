@@ -17,7 +17,7 @@ describe('getUserImage', () => {
   it('get the user uploaded images from the database', async () => {
     
    // Arrange
-  //  expect.assertions(12)
+   expect.assertions(2)
   
   // Act
   // first we get the user imges Uploads('1' || "2")
