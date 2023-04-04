@@ -31,11 +31,6 @@ describe('getUserImage', () => {
   expect(user2).toHaveLength(2)
 
 
- 
- 
- 
- 
- 
   }) 
 
   it('get image with properties right', async()=>{
