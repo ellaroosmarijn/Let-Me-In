@@ -12,12 +12,14 @@ afterAll(() => {
   jest.restoreAllMocks()
 })
 
-const getResultsMockData = {
-  id: 111,
-  auth0Id: 'MockAuth0Id',
-  imageId: 'MockImageId',
-  created: 'MockcCreated',
-}
+const getResultsMockData = [
+  {
+    id: 111,
+    auth0Id: '1',
+    imageId: '4',
+    created: 'dateString',
+  },
+]
 
 describe('/GET /api/v1/results/', () => {
   it('should recieve data from results table', async () => {

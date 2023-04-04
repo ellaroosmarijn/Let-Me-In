@@ -17,6 +17,7 @@ afterAll(() => {
 describe('getResults', () => {
   it('gets the results from the results table in the database.', async () => {
     // Arrange
+
     expect.assertions(4)
 
     // Act
@@ -25,9 +26,9 @@ describe('getResults', () => {
     // Assert
     // Since the getResults() database function gets a random image
     // we can only assert that the Results has the correct properties
-    expect(results.id).toBeDefined()
-    expect(results.auth0Id).toBeDefined()
-    expect(results.imageId).toBeDefined()
-    expect(results.created).toBeDefined()
+    expect(results[3].id).toBe(4)
+    expect(results[2].auth0Id).toBe('1')
+    expect(results[0].imageId).toBeDefined()
+    expect(results).toHaveLength(6)
   })
 })
