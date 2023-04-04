@@ -50,7 +50,6 @@ describe('/api/v1/create', () => {
     const actual = await request(server)
       .post('/api/v1/create')
       .send(newImageData)
-    console.log(actual.text)
     expect(actual.text).toBe('Whoops, something went wrong')
   })
 
