@@ -6,12 +6,13 @@ import { uploads } from '../db/uploads'
 
 const router = Router()
 
-router.get('/uploads/:auth0Id', async (req, res)=> {
+router.get('/:auth0Id', async (req, res)=> {
 try{
 
   // const auth0Id = req.auth?.sub
   const auth0Id = req.params.auth0Id
   const userImgs= await uploads(auth0Id)
+  console.log(userImgs)
   res.json(userImgs)
 
 }catch (error) {
