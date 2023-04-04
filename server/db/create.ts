@@ -9,11 +9,3 @@ function addImage(imageData: ImageCreate, uploaderId: string, db = connection) {
 }
 
 export default { addImage }
-
-// return db('budgets')
-// .insert({
-//   user_id: userId,
-//   name: newBudget.name,
-//   amount: newBudget.amount,
-// })
-// .returning(['id'])
