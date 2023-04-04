@@ -18,7 +18,7 @@ describe('getResults', () => {
   it('gets the results from the results table in the database.', async () => {
     // Arrange
 
-    expect.assertions(4)
+    expect.assertions(5)
 
     // Act
     const results = await getResults()
@@ -30,5 +30,6 @@ describe('getResults', () => {
     expect(results[2].auth0Id).toBe('1')
     expect(results[0].imageId).toBeDefined()
     expect(results).toHaveLength(6)
+    expect(results[0].imageUrl).toBeDefined()
   })
 })
