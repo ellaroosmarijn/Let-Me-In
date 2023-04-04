@@ -1,13 +1,7 @@
-// export default function Create() {
-//   return (
-//     <>
-//       <h1>CREATE PAGE :D</h1>
-//     </>
-//   )
-// }
-
 import AWS from 'aws-sdk'
 import { useState } from 'react'
+import { addImage } from '../actions/create'
+import { useAppSelector, useAppDispatch } from '../hooks'
 const S3_BUCKET = 'letmein-image'
 const REGION = 'ap-southeast-2'
 
@@ -19,7 +13,9 @@ AWS.config.update({
 })
 
 function Create() {
-  const [selectedFile, setSelectedFile] = useState({})
+  const dispatch = useAppDispatch()
+  const { data, error, loading } = useAppSelector((state) => state.create)
+  const [selectedFile, setSelectedFile] = useState()
   const [imageUrl, setImageUrl] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -34,7 +30,9 @@ function Create() {
     setName(e.target.value)
   }
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setDescription(e.target.value)
   }
 
@@ -44,27 +42,22 @@ function Create() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (!selectedFile) {
-      return
+    const imageData = {
+      name,
+      description,
+      imageUrl,
     }
-    //dispatch(addImageToDatabase(imageData, selectedFile))
-
-    const params = {
-      Bucket: S3_BUCKET,
-      Key: `${Date.now()}.${selectedFile.name}`,
-      Body: selectedFile,
-    }
-    const { Location } = await s3.upload(params).promise()
-    //setImageUrl(Location)
-    console.log('uploading to s3', Location)
+    dispatch(addImage(imageData, selectedFile))
   }
 
-  //submit the form - containing object {
-  // image meta-data,
-  // uploadedImage: selectedFile
-  //}
-  // S3 upload, await the URL
-  // Add to DB with the url
+  if (loading) {
+    return <div>Uploading your image...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit}>

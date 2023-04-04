@@ -36,7 +36,10 @@ export function addImageRejected(errorMessage: string): CreateAction {
   }
 }
 
-export function addImage(imageData: ImageCreate, imageFile: File): ThunkAction {
+export function addImage(
+  imageData: ImageCreate,
+  imageFile: File | undefined
+): ThunkAction {
   return async (dispatch) => {
     dispatch(addImagePending())
     try {
