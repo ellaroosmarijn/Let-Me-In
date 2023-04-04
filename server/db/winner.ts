@@ -6,9 +6,16 @@ export interface Winner {
   created: string
 }
 
+interface WinnerId {
+  id: number
+}
+
 // add results to database
-export function addWinnerResults(winner: Winner, db = connection) {
-  return db('results').insert(winner)
+export function addWinnerResults(
+  winner: Winner,
+  db = connection
+): Promise<WinnerId[]> {
+  return db('results').insert(winner, ['id'])
 }
 
 // get result by id

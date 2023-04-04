@@ -23,7 +23,7 @@ const testData = {
 describe('addWinnerResults', () => {
   it('adds a winner result to the results database', async () => {
     const resultAddedId = await addWinnerResults(testData, connection)
-    expect(resultAddedId[0]).toBe(7)
+    expect(resultAddedId[0].id).toBe(7)
   })
 })
 
