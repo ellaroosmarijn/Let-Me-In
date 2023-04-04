@@ -28,8 +28,8 @@ describe('POST /api/vi/winner/', () => {
     expect.assertions(2)
     jest.mocked(addWinnerResults).mockResolvedValue(addResultTestData)
     jest.mocked(getById).mockResolvedValue(newResults)
-
-    const response = await request(server).post('/api/v1/winner/')
+    const imageId = '7'
+    const response = await request(server).post('/api/v1/winner/').send(imageId)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(newResults)
