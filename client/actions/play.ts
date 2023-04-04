@@ -39,7 +39,7 @@ export function fetchError(errMessage: string): PlayAction {
   return {
     type: FETCH_PLAY_CONTENT_ERROR,
     payload: errMessage
-  }
+  } as PlayAction
 }
 
 export function fetchPlayContent():ThunkAction {
