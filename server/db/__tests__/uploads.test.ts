@@ -40,7 +40,7 @@ describe('getUserImage', () => {
 
   it('get image with properties right', async()=>{
 
-
+    expect.assertions(3)
     const user = await uploads('1')
     const obj1= {
       id: 1,
