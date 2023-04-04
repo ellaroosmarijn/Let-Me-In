@@ -1,29 +1,19 @@
-import AWS from 'aws-sdk'
 import { useState } from 'react'
 import { addImage } from '../actions/create'
 import { useAppSelector, useAppDispatch } from '../hooks'
-const S3_BUCKET = 'letmein-image'
-const REGION = 'ap-southeast-2'
-
-AWS.config.update({
-  accessKeyId: 'AKIAWJMNYKETP4GSCQJL',
-  secretAccessKey: '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',
-  region: 'ap-southeast-2',
-  signatureVersion: 'v4',
-})
 
 function Create() {
   const dispatch = useAppDispatch()
-  const { data, error, loading } = useAppSelector((state) => state.create)
-  const [selectedFile, setSelectedFile] = useState()
+  const { error, loading } = useAppSelector((state) => state.create)
+  const [selectedFile, setSelectedFile] = useState<File | undefined>()
   const [imageUrl, setImageUrl] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
 
-  const s3 = new AWS.S3()
-
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(e.target.files[0])
+    if (e.target.files) {
+      setSelectedFile(e.target.files[0])
+    }
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,5 +87,3 @@ function Create() {
   )
 }
 export default Create
-
-//https://dev.to/shadid12/how-to-upload-images-to-s3-in-a-react-application-4lm
