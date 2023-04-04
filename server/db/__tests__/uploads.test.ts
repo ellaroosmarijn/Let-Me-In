@@ -56,9 +56,26 @@ describe('getUserImage', () => {
       description: 'Judge Judy time',
       imageUrl: 'https://media.tenor.com/vTY0qobiAtsAAAAC/judge-judy-time.gif'
     }
+    const userArray =  [
+      {
+        id: 1,
+        uploaderId: '1',
+        name: 'Let Me In',
+        description: 'LET ME INNNNNNNNNNNNNNN',
+        imageUrl: 'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif'
+      },
+      {
+        id: 2,
+        uploaderId: '1',
+        name: 'Judge Judy',
+        description: 'Judge Judy time',
+        imageUrl: 'https://media.tenor.com/vTY0qobiAtsAAAAC/judge-judy-time.gif'
+      }
+    ]
 
     expect(user[0]).toMatchObject(obj1)
     expect(user[1]).toMatchObject(obj2)
+    expect(user).toEqual(userArray)
 
   })
 
