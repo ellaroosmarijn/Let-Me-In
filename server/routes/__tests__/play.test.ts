@@ -49,6 +49,7 @@ describe('GET /api/vi/play', () => {
     )
   })
   it('returns 500 when the database fails', async () => {
+    jest.spyOn(console, 'log').mockImplementation(() => {})
     jest
       .mocked(db.getWinningImage)
       .mockRejectedValue(new Error('database failed to GET'))
