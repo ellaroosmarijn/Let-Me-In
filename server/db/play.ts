@@ -7,13 +7,19 @@ const environment = (process.env.NODE_ENV || 'development') as Environment
 const config = knexFile[environment]
 const connection = knex(config)
 
-import { Image } from "../../models/image";
+import { Image } from '../../models/image'
 
-export function getAllImages ( db = connection ): Promise<Image[]> {
-  return db('images').select()
+
+export async function getWinningImage( db = connection): Promise<Image> {
+  return db('images')
+  .orderByRaw('RANDOM()')
+  .select(
+    'id',
+    'uploader_id as uploaderId',
+    'name',
+    'description',
+    'image_url as imageUrl'
+  )
+  .first()
 }
 
-
-// export function getRandomImage ( db = connection): Promise<Image> {
-  // return db('images')
-// }
