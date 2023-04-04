@@ -24,7 +24,7 @@ describe('getUserImage', () => {
   const user1 = await uploads('1')
   const user2 = await uploads('2')
 
-  console.log(user1)
+  // console.log(user1)
   // Assert
   // we can check for length 
   expect(user1).toHaveLength(2)
