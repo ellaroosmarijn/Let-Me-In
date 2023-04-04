@@ -26,7 +26,7 @@ describe('getResults', () => {
     // Assert
     // Since the getResults() database function gets a random image
     // we can only assert that the Results has the correct properties
-    console.log(results)
+
     expect(results[2].id).toBe(3)
     expect(results[1].auth0Id).toBe('1')
     expect(results[0].imageId).toBeDefined()
