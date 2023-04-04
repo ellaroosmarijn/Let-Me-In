@@ -55,6 +55,8 @@ describe('Get /api/v1/uploads/', () => {
     expect(response.body).toEqual(getMockUserUploads)
   })
 
+
+
   it('should return status 500 and an error message when database fails.', async () => {
     // Arrange
     expect.assertions(1)
@@ -69,13 +71,13 @@ describe('Get /api/v1/uploads/', () => {
     expect(response.status).toBe(500)
   })
 
-  it('should return status 401 and an error message when we have the wrong auth0Id.', async () => {
+  it('should return status 401 and an error message when we do not have auth0Id.', async () => {
     // Arrange
-    // expect.assertions(2)
+    expect.assertions(2)
     jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
       const reqAuth = req as JwtRequest
       reqAuth.auth = {
-        // sub: '',
+     
       }
       next()
     })
