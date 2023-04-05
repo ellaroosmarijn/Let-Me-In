@@ -26,10 +26,10 @@ export function failureImage(error: string): UploadsAction{
 }
 
 
-export function fetchUploads(auth0Id:string): ThunkAction{
+export function fetchUploads(token:string): ThunkAction{
 return (dispatch)=>{
   dispatch(requestImage())
-  return getUploads(auth0Id).then((res)=>{dispatch(receiveImage(res))}).catch((err)=>{
+  return getUploads(token).then((res)=>{dispatch(receiveImage(res))}).catch((err)=>{
     if (err instanceof Error) {
       dispatch(failureImage(err.message))
     } else {

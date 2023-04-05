@@ -5,20 +5,17 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 export default function Uploads() {
   const { getAccessTokenSilently } = useAuth0()
-  const [error, setError] = useState('')
+  // const [error, setError] = useState('')
   const uploads = useAppSelector((state) => state.uploads)
   const dispatch = useAppDispatch()
 
-  async function getToken() {
-    const token = await getAccessTokenSilently()
-    return token
-  }
-
   useEffect(() => {
-    const token = getToken()
-
-    dispatch(fetchUploads(token)), []
-  })
+    async function getDispatch() {
+      const token = await getAccessTokenSilently()
+      dispatch(fetchUploads(token))
+    }
+    getDispatch()
+  }, [])
 
   return (
     <>
