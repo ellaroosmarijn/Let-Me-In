@@ -8,32 +8,6 @@ export default function Results() {
   const results = useAppSelector((state) => state.results)
   const dispatch = useAppDispatch()
 
-  // async function getToken(): Promise<string> {
-  //   try {
-  //     const token = await getAccessTokenSilently()
-  //     return token
-  //   } catch (err) {
-  //     console.error(err)
-  //     return ''
-  //   }
-  // }
-  // try {const token = await getToken()
-  //   dispatch(fetchResults(token))}
-  // const token = await getToken()
-  // dispatch(fetchResults(token))
-
-  // useEffect(() => {
-  //   // declare the data fetching function
-  //   const fetchData = async () => {
-  //     const data = await fetch('https://yourapi.com');
-  //   }
-
-  //   // call the function
-  //   fetchData()
-  //     // make sure to catch any error
-  //     .catch(console.error);
-  // }, [])
-
   useEffect(() => {
     const getAccess = async () => {
       const token = await getAccessTokenSilently()
@@ -41,16 +15,6 @@ export default function Results() {
     }
     getAccess().catch(console.error)
   }, [dispatch, getAccessTokenSilently])
-
-  // useEffect(async () => {
-  //   try {
-  //     const token = await getToken()
-  //     dispatch(fetchResults(token))
-  //   } catch (err) {
-  //     console.error(err)
-  //     return 'no access token'
-  //   }
-  // })
 
   return (
     <>
