@@ -5,5 +5,10 @@
     font-size: 72px;
   }
 
+  & > img {
+    width: 100px;
+    height: 100px;
+    outline: red 2px solid;
+  }
   
 }
