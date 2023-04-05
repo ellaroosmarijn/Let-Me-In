@@ -1,74 +1,71 @@
-import {
-  screen,
-  render,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react'
+import nock from 'nock'
+import { MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { screen, render, waitFor, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
-import { getResults } from '../../apis/results'
+import App from '../App'
+import { initialiseStore } from '../../store'
+import checkJwt from '../../../server/auth0'
 
-jest.mock('../../apis/results')
+import { useAuth0 } from '@auth0/auth0-react'
 
-import Results from '../Results'
+const mockGetAccessToken = jest.fn()
 
-describe('<Results />', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  it('should show a loading indicator to start', async () => {
-    jest.mocked(getResults).mockResolvedValue({
-      id: number
-  auth0Id: string
-  imageId: string
-  created: string,
-      },
-    })
-
-    render(<Results />)
-
-    expect(screen.getByText(/loading/i)).toBeInTheDocument()
-
-    await waitForElementToBeRemoved(screen.queryByText(/loading/i))
-  })
-  it('should show the name and image when done loading', async () => {
-    jest.mocked(getResults).mockResolvedValue({
-      name: 'Pikachu',
-      sprites: {
-        front_shiny: 'https://image.Results.cool',
-      },
-    })
-
-    render(<Results />)
-
-    screen.getByText(/loading/i)
-
-    // Not so useful: because a promise takes _some_ time to resolve
-    // await waitFor(() => expect(getResults).toHaveBeenCalledTimes(1))
-
-    // A bit more useful:
-    // await waitForElementToBeRemoved(() => screen.queryByText(/loading/i))
-
-    // Easiest:
-    await screen.findByRole('heading', { name: /pikachu/i })
-  })
-  it('should show an error when it fails the fetch', async () => {
-    jest.spyOn(console, 'log').mockImplementation(() => {})
-    jest.mocked(getResults).mockRejectedValue(new Error('it was a ditto'))
-
-    render(<Results />)
-
-    screen.getByText(/loading/i)
-
-    await screen.findByText(/something went wrong/i)
-  })
+jest.mock('@auth0/auth0-react', () => {
+  return {
+    useAuth0: jest.fn(() => ({
+      getAccessTokenSilently: mockGetAccessToken,
+      isAuthenticated: true,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+    })),
+  }
 })
 
-// Queries:
+beforeEach(() => {
+  jest.resetAllMocks()
+})
 
-// getBy... look for an element in the DOM, if it is there: return it, if it's not: throw an error
+afterAll(() => {
+  jest.restoreAllMocks()
+})
 
-// findBy... look for an element in the DOM, if it is there: return it, if it's not: wait (timeout after 5 seconds and throw an error)
+const ResultsMockData = [
+  {
+    id: 111,
+    auth0Id: '1',
+    imageId: '4',
+    created: 'dateString',
+    imageUrl: 'image string',
+    description: 'Title of image',
+  },
+]
 
-// queryBy... look for an element in the DOM, if it is there: return it, if it's not: return null (useful for asserting things are NOT in the DOM)
+describe('<Results />', () => {
+  it('successfully shows image from results table', async () => {
+    // Arrange
+    expect.assertions(3)
+
+    const scope = nock('http://localhost')
+      .get('/api/v1/results')
+      .reply(200, ResultsMockData)
+
+    // Act
+    render(
+      <Provider store={initialiseStore()}>
+        <MemoryRouter initialEntries={['/results']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
+    )
+
+    await waitFor(() => expect(scope.isDone()).toBeTruthy())
+
+    const results = screen.getAllByAltText(ResultsMockData[0].description)
+
+    // Assert
+    expect(results).toHaveAttribute('src', ResultsMockData[0].imageUrl)
+  })
+})
