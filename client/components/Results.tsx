@@ -34,7 +34,7 @@ export default function Results() {
                     return (
                       <>
                         <div>
-                          <h1>Congrats on being Let In!</h1>
+                          <h4>Congrats on being Let In!</h4>
                           <img src={data.imageUrl} alt="derp" />
                           <p></p>
                         </div>
@@ -43,7 +43,7 @@ export default function Results() {
                   })
                 ) : (
                   <div>
-                    <h1>{`If you don't play, you can't have any results. How can you have any results if you don't play?`}</h1>
+                    <h4>{`If you don't play, you can't have any results. How can you have any results if you don't play?`}</h4>
                     <Link to="/play">
                       <button>Go Play!</button>
                     </Link>
@@ -59,7 +59,7 @@ export default function Results() {
         ) : (
           <div>
             <div>
-              <h1>{`If you don't log in, you can't have any results. How can you have any results if you don't log in?`}</h1>
+              <h4>{`If you don't log in, you can't have any results. How can you have any results if you don't log in?`}</h4>
               <Link to="/">
                 <button>Go back Home and Log in!</button>
               </Link>

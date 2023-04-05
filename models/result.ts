@@ -10,5 +10,6 @@ export interface ResultCreate {
 }
 
 export interface JoinedResult extends Result {
+  description: string
   imageUrl: string
 }
