@@ -17,32 +17,32 @@ export default function Home() {
   }
 
   return (
-    <div className='home'>
+    <div className="home">
       <h4>Welcome to Let Me In!</h4>
       <div>
         {homeImage.loading && (
-          <img src='/assets/loading.gif' className='loader' alt='loading' />
+          <img src="/assets/loading.gif" className="loader" alt="loading" />
         )}
 
-        {homeImage.error && (
-          <p role={'paragraph'}>{homeImage.error}</p>
-        )}
+        {homeImage.error && <p role={'paragraph'}>{homeImage.error}</p>}
 
         {homeImage.data ? (
           <div
             onClick={imageClick}
             onKeyDown={imageClick}
-            role='button'
+            role="button"
             tabIndex={0}
           >
-            <img 
-              src={homeImage.data.imageUrl} 
-              alt={homeImage.data.description} />
+            <img
+              src={homeImage.data.imageUrl}
+              alt={homeImage.data.description}
+            />
           </div>
-        ) : <div></div>}
-        
+        ) : (
+          <div></div>
+        )}
       </div>
-      <Link to='/play'>
+      <Link to="/play">
         <button>Start!</button>
       </Link>
     </div>
