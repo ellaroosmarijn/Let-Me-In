@@ -31,18 +31,24 @@ const getMockUserUploads = [
   },
 ]
 
+const mockSub = 'auth0|123'
+
+function mockJwt(sub: string) {
+  jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
+    const reqAuth = req as JwtRequest
+    reqAuth.auth = {
+      sub: sub,
+    }
+    next()
+  })
+}
+
 describe('Get /api/v1/uploads/', () => {
   it('should return status 200 and return mockuploaderId', async () => {
     // Arrange
     expect.assertions(2)
 
-    jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
-      const reqAuth = req as JwtRequest
-      reqAuth.auth = {
-        sub: 'auth0|123',
-      }
-      next()
-    })
+    mockJwt(mockSub)
 
     jest.mocked(getUploadsByUploaderId).mockResolvedValue(getMockUserUploads)
 
@@ -57,13 +63,7 @@ describe('Get /api/v1/uploads/', () => {
   it('should return status 500 and an error message when database fails.', async () => {
     // Arrange
     expect.assertions(1)
-    jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
-      const reqAuth = req as JwtRequest
-      reqAuth.auth = {
-        sub: 'auth0|123',
-      }
-      next()
-    })
+    mockJwt(mockSub)
 
     jest.spyOn(console, 'error').mockImplementation(() => {})
     jest
@@ -80,11 +80,7 @@ describe('Get /api/v1/uploads/', () => {
   it('should return status 401 and an error message when we do not have auth0Id.', async () => {
     // Arrange
     expect.assertions(2)
-    jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
-      const reqAuth = req as JwtRequest
-      reqAuth.auth = {}
-      next()
-    })
+    await mockJwt('')
 
     jest.spyOn(console, 'error').mockImplementation(() => {})
     jest.mocked(getUploadsByUploaderId).mockResolvedValue(getMockUserUploads)

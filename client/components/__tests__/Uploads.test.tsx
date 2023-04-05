@@ -4,14 +4,13 @@ import { Provider } from 'react-redux'
 import { screen, render, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-import checkJwt, { JwtRequest } from '../../../server/auth0'
 
 import App from '../App'
 import { initialiseStore } from '../../store'
 
-// jest.mock('../../../server/auth0', ()=>({checkJwt: jest.fn()}))
-jest.mock('../../../server/auth0')
-const mockedcheckJwt= checkJwt as jest.MockedFunction<typeof checkJwt>
+import { useAuth0 } from '@auth0/auth0-react'
+
+jest.mock('@auth0/auth0-react')
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -21,46 +20,46 @@ afterAll(() => {
   jest.restoreAllMocks()
 })
 
-const uploadUserMockData = {
-  id: 111,
-  uploaderId: 'auth0|123',
-  name: 'MockName',
-  description: 'MockDescription',
-  imageUrl: 'MockImageUrl',
-}
+const mockedSub = 'auth0|123'
+
+const uploadUserMockData = [
+  {
+    id: 111,
+    uploaderId: 'auth0|123',
+    name: 'MockName',
+    description: 'MockDescription',
+    imageUrl: 'MockImageUrl',
+  },
+]
 
 describe('<Uploads />', () => {
   it('successfully shows the users uploaded images', async () => {
-    // // Arrange
-    // // expect.assertions()
-   
-    // mockedcheckJwt.mockImplementation(async (req, res, next)=>{
-    //   const reqAuth=req as JwtRequest
-    //   reqAuth.auth={
-    //     sub: 'auth0|123',
-    //   }
-    //   next()
-    // })
+    // Arrange
+    const mockAuth = {
+      getAccessTokenSilently: jest.fn(async () => mockedSub),
+      isAuthenticated: true,
+    }
+    const scope = nock('http://localhost')
+      .get('/api/v1/uploads')
+      .reply(200, uploadUserMockData)
 
-    // const scope = nock('http://localhost')
-    //   .get('/api/v1/uploads')
-    //   .reply(200, uploadUserMockData)
+    jest.mocked(useAuth0).mockReturnValue(mockAuth as any)
+    // Act
+    render(
+      <Provider store={initialiseStore()}>
+        <MemoryRouter initialEntries={['/uploads']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
+    )
 
-    // // Act
-    // render(
-    //   <Provider store={initialiseStore()}>
-    //     <MemoryRouter>
-    //       <App />
-    //     </MemoryRouter>
-    //   </Provider>
-    // )
+    await waitFor(() => expect(scope.isDone()).toBeTruthy())
 
-    // await waitFor(() => expect(scope.isDone()).toBeTruthy())
+    const uploadData = screen.getByAltText(uploadUserMockData[0].description)
 
-    // const uploadData = screen.getByAltText(uploadUserMockData.description)
-
-    // // Assert
-    // expect(uploadData).toHaveAttribute('src', uploadUserMockData.imageUrl)
-    expect(1).toBe(1)
+    // Assert
+    expect(uploadData).toHaveAttribute('src', uploadUserMockData[0].imageUrl)
   })
+
+  
 })
