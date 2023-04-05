@@ -6,5 +6,5 @@ export interface Result {
 }
 
 export interface ResultCreate {
-  imageId: string
+  imageId: number
 }
