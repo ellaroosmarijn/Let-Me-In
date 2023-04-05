@@ -1,14 +1,30 @@
 import { Router } from 'express'
 
-import { addWinnerResults, getById } from '../db/winner'
+import { addWinnerResults } from '../db/winner'
+
+import checkJwt, { JwtRequest } from '../auth0'
 
 const router = Router()
 
-router.post('/', async (req, res) => {
+router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
-    const userInput = await addWinnerResults(req.body)
-    const addedValue = await getById(userInput[0].id)
-    return res.json(addedValue)
+    const auth0Id = req.auth?.sub
+
+    const imageId = req.body.imageId as number
+
+    if (!imageId || !auth0Id) {
+      res.sendStatus(400)
+      return
+    }
+
+    const objectToInsert = {
+      auth0_id: auth0Id,
+      image_id: imageId,
+      created: new Date(),
+    }
+
+    const [result] = await addWinnerResults(objectToInsert)
+    return res.json(result)
   } catch (e) {
     console.log(e)
     res.sendStatus(500)
