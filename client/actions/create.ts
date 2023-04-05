@@ -36,7 +36,7 @@ export function addImageRejected(errorMessage: string): CreateAction {
 
 export function addImage(
   imageData: ImageCreate,
-  imageFile: File | undefined,
+  imageFile: File | null,
   token: string
 ): ThunkAction {
   return async (dispatch) => {
