@@ -33,7 +33,7 @@ describe('<Create />', () => {
     const inputItems = await screen.findAllByRole('textbox')
     expect(inputItems).toHaveLength(2)
   })
-  it('should have submit button', async () => {
+  it('should have upload button', async () => {
     render(
       <MemoryRouter initialEntries={['/Create']}>
         <Provider store={initialiseStore()}>
@@ -41,11 +41,14 @@ describe('<Create />', () => {
         </Provider>
       </MemoryRouter>
     )
-
-    const buttonItem = await screen.findByRole('button', { name: /Upload/i })
-    expect(buttonItem).toHaveLength(1)
+    const buttonItem = await screen.findByRole('button', {
+      name: 'Upload',
+    })
+    expect(buttonItem).toHaveTextContent('Upload')
   })
   it.todo(
     'if any of the value of 3 inputs is null, the submit button should be disabled'
   )
 })
+
+//findByRole('button', {value: {text: /Upload/i}})
