@@ -5,11 +5,9 @@ import db from '../db/create'
 
 const router = Router()
 
-router.post('/', async (req: JwtRequest, res) => {
+router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
-    const auth0Id = 'bananas'
-    //req.auth?.sub
-    console.log(auth0Id)
+    const auth0Id = req.auth?.sub
     if (auth0Id) {
       const result = await db.addImage(req.body, auth0Id)
       return res.json(result)

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { addImage } from '../actions/create'
 import { useAppSelector, useAppDispatch } from '../hooks'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function Create() {
   const dispatch = useAppDispatch()
@@ -9,6 +10,8 @@ function Create() {
   const [imageUrl, setImageUrl] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+
+  const { getAccessTokenSilently } = useAuth0()
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -32,12 +35,13 @@ function Create() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const accessToken = await getAccessTokenSilently()
     const imageData = {
       name,
       description,
       imageUrl,
     }
-    dispatch(addImage(imageData, selectedFile))
+    dispatch(addImage(imageData, selectedFile, accessToken))
   }
 
   if (loading) {

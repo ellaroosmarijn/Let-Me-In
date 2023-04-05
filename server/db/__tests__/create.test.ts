@@ -26,6 +26,14 @@ describe('addImage', () => {
 
     expect(imageData).toHaveLength(5)
     expect(imageData[4].image_url).toBe('https://test.jpg')
-    expect(addedimage).toEqual([{ id: 5, image_url: 'https://test.jpg' }])
+    expect(addedimage).toEqual([
+      {
+        id: 5,
+        name: 'Test Name',
+        uploader_id: 'testID',
+        description: 'Test Description',
+        image_url: 'https://test.jpg',
+      },
+    ])
   })
 })

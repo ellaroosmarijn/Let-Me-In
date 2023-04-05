@@ -11,7 +11,7 @@ export type CreateAction =
   | { type: typeof ADD_IMAGE_PENDING; payload: void }
   | {
       type: typeof ADD_IMAGE_FULFILLED
-      payload: Omit<ImageCreate, 'description'>
+      payload: Image
     }
   | { type: typeof ADD_IMAGE_REJECTED; payload: string }
 
@@ -20,9 +20,7 @@ export function addImagePending(): CreateAction {
     type: ADD_IMAGE_PENDING,
   } as CreateAction
 }
-export function addImageFulfilled(
-  imageData: Omit<ImageCreate, 'description'>
-): CreateAction {
+export function addImageFulfilled(imageData: Image): CreateAction {
   return {
     type: ADD_IMAGE_FULFILLED,
     payload: imageData,
@@ -38,7 +36,8 @@ export function addImageRejected(errorMessage: string): CreateAction {
 
 export function addImage(
   imageData: ImageCreate,
-  imageFile: File | undefined
+  imageFile: File | undefined,
+  token: string
 ): ThunkAction {
   return async (dispatch) => {
     dispatch(addImagePending())
@@ -48,12 +47,12 @@ export function addImage(
         const imageUrl = await imageUpload(imageFile)
         if (imageUrl) {
           imageDataInput = { ...imageData, imageUrl: imageUrl }
-          const addedImage = await apiFunction.addImage(imageDataInput)
+          const addedImage = await apiFunction.addImage(imageDataInput, token)
           dispatch(addImageFulfilled(addedImage))
         }
       } else {
         imageDataInput = imageData
-        const addedImage = await apiFunction.addImage(imageDataInput)
+        const addedImage = await apiFunction.addImage(imageDataInput, token)
         dispatch(addImageFulfilled(addedImage))
       }
     } catch (error) {

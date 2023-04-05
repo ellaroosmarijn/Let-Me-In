@@ -1,4 +1,4 @@
-import { Image, ImageCreate } from '../../models/image'
+import { Image } from '../../models/image'
 import {
   CreateAction,
   ADD_IMAGE_PENDING,
@@ -7,7 +7,7 @@ import {
 } from '../actions/create'
 
 interface CreateState {
-  data: Omit<ImageCreate, 'description'> | undefined
+  data: Image | undefined
   error: string | undefined
   loading: boolean
 }
