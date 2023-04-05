@@ -30,13 +30,6 @@ describe('GET /api/vi/play', () => {
     const response = await request(server).get('/api/v1/play')
     //ASSERT
     expect(response.body).toMatchInlineSnapshot(
-      {
-        id: 4,
-        uploaderId: '2',
-        name: "It's me",
-        description: 'Can you buzz me in?',
-        imageUrl: '/images/can-you-buzz-me-in.gif',
-      },
       `
       {
         "description": "Can you buzz me in?",
