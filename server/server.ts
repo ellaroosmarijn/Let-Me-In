@@ -6,6 +6,7 @@ import playRoutes from './routes/play'
 import winnerRoutes from './routes/winner'
 import resultsRoutes from './routes/results'
 import createRoutes from './routes/create'
+import uploadsRoutes from './routes/uploads'
 
 const server = express()
 
@@ -17,6 +18,7 @@ server.use('/api/v1/play', playRoutes)
 server.use('/api/v1/winner', winnerRoutes)
 server.use('/api/v1/results', resultsRoutes)
 server.use('/api/v1/create', createRoutes)
+server.use('/api/v1/uploads', uploadsRoutes)
 
 server.get('*', (req, res) => {
   res.sendFile(resolve('server/public/index.html'))
