@@ -8,6 +8,16 @@ export default function Results() {
   const results = useAppSelector((state) => state.results)
   const dispatch = useAppDispatch()
 
+  // useEffect(() => {
+  //   getAccessTokenSilently()
+  //     .then((token) => {
+  //       dispatch(fetchResults(token))
+  //     })
+  //     .catch((err) => {
+  //       console.error(err.message)
+  //     })
+  // }, [dispatch, getAccessTokenSilently])
+
   useEffect(() => {
     const getAccess = async () => {
       const token = await getAccessTokenSilently()
@@ -18,7 +28,18 @@ export default function Results() {
 
   return (
     <>
-      <h1>Congrats on being Let In!</h1>
+      <div className="results">
+        <h1>Congrats on being Let In!</h1>
+        <div>
+          {results.loading && (
+            <img src="/assets/loading.gif" className="loader" alt="loading" />
+          )}
+
+          {results.error && <p role={'paragraph'}> {results.error} </p>}
+
+          {results.data}
+        </div>
+      </div>
     </>
   )
 }

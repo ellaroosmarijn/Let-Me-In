@@ -24,13 +24,13 @@ describe('getResults', () => {
     const results = await getResults('1')
 
     // Assert
-    // Since the getResults() database function gets a random image
-    // we can only assert that the Results has the correct properties
-
+    console.log(results)
     expect(results[2].id).toBe(3)
     expect(results[1].auth0Id).toBe('1')
-    expect(results[0].imageId).toBeDefined()
+    expect(results[2].imageId).toBe(3)
     expect(results).toHaveLength(3)
-    expect(results[0].imageUrl).toBeDefined()
+    expect(results[0].imageUrl).toBe(
+      'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif'
+    )
   })
 })
