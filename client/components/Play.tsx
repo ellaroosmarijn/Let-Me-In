@@ -5,11 +5,12 @@ import { Image } from '../../models/image'
 import shuffle from 'fisher-yates'
 
 import { fetchPlayContent } from '../actions/play'
+import React from 'react'
 
 export default function Play() {
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
   const [shuffledArray, setShuffledArray] = useState<Image[]>([])
-  const [isClicked, setIsClicked] = useState<boolean>(false)
+  const [activeCard, setActiveCard] = useState<boolean>(false)
   const [arr, setArr] = useState<Image[]>([
     {
       id: 1001,
@@ -97,10 +98,14 @@ export default function Play() {
   }, [arr, data])
 
   function handleClick(index: number) {
-    setFlippedIndex(index)
-    setTimeout(() => {
-      setFlippedIndex(null)
-    }, 2000)
+    setActive(true)
+    if (setActive) {
+      setFlippedIndex(index)
+      setTimeout(() => {
+        setFlippedIndex(null)
+        setActive(false)
+      }, 2000)
+    }
   }
 
   return (
