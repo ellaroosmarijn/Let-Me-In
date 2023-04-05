@@ -34,9 +34,8 @@ export default function Results() {
                     return (
                       <>
                         <div>
-                          <h4>Congrats on being Let In!</h4>
-                          <img src={data.imageUrl} alt="derp" />
-                          <p></p>
+                          <h4>{data.description}</h4>
+                          <img src={data.imageUrl} alt={data.description} />                          
                         </div>
                       </>
                     )
