@@ -2,7 +2,7 @@ exports.seed = async (knex) => {
   await knex('images').insert([
     {
       id: 1,
-      uploader_id: 'google-oauth2|104177402938278805058',
+      uploader_id: '1',
       name: 'Let Me In',
       description: 'LET ME INNNNNNNNNNNNNNN',
       image_url:
