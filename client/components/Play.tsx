@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Image } from '../../models/image'
+import shuffle from 'fisher-yates'
 
 import { fetchPlayContent } from '../actions/play'
 
@@ -33,14 +34,25 @@ export default function Play() {
    dispatchFetchPlayContent()
   }, [dispatch, getAccessTokenSilently])
 
+
+  const shuffledArray = shuffle(dataArr)
+ 
   return (
     <div className="play">
       <h1>Catchy Header</h1>
+      <div>
       {error && <p>{error}</p>}
       {loading && <img src="/loading.gif" alt="loading spinner" />}
-      {dataArr.map((image)=>{
-        return(<img key={image?.id} src={image?.imageUrl} alt="facedown cards" />) 
+      {shuffledArray.map((image)=>{
+        return(
+          <>
+        <div></div>
+        <img key={image?.id} src={image?.imageUrl} alt="facedown cards" />
+        </>
+        ) 
+        
       })}
+    </div>
     </div>
   )
 }

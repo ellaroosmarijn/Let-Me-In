@@ -22,5 +22,9 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */,
     "noEmit": true
   },
-  "include": ["server/**/*", "client/**/*"]
+  "include": ["server/**/*", "client/**/*", "typings"],
+  "typeRoots": [
+    "./typings",
+    "./node_modules/@types/"
+  ]
 }
