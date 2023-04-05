@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { fetchUploads } from '../actions/uploads'
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function Uploads() {
-  const { getAccessTokenSilently } = useAuth0()
-  // const [error, setError] = useState('')
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0()
+
   const uploads = useAppSelector((state) => state.uploads)
   const dispatch = useAppDispatch()
 
@@ -15,8 +15,11 @@ export default function Uploads() {
       dispatch(fetchUploads(token))
     }
     getDispatch()
-  }, [])
+  }, [dispatch, getAccessTokenSilently])
 
+  if (!isAuthenticated) {
+    return <h1>You need to log in to access this page.</h1>
+  }
   return (
     <>
       <h1>UPLOADS PAGE :D</h1>
@@ -27,6 +30,7 @@ export default function Uploads() {
               <li key={image.id}>
                 <h2>{image.name}</h2>
                 <img src={image.imageUrl} alt={image.description} />
+                <p>{image.description}</p>
               </li>
             )
           })}

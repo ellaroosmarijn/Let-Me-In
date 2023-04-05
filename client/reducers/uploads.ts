@@ -1,6 +1,9 @@
-import type { Image } from "../../models/image";
+import type { Image } from '../../models/image'
 import {
-  UploadsAction,RECEIVE_IMAGE, REQUEST_IMAGE, FAILURE_IMAGE
+  UploadsAction,
+  RECEIVE_IMAGE,
+  REQUEST_IMAGE,
+  FAILURE_IMAGE,
 } from '../actions/uploads'
 
 interface UploadState {
@@ -12,31 +15,34 @@ interface UploadState {
 const initialState: UploadState = {
   data: [],
   error: null,
-  loading: false
+  loading: false,
 }
 
-function uploadReducer(state = initialState, action: UploadsAction): UploadState {
+function uploadReducer(
+  state = initialState,
+  action: UploadsAction
+): UploadState {
   switch (action.type) {
     case RECEIVE_IMAGE:
       return {
         data: action.payload,
         error: null,
-        loading: false
+        loading: false,
       }
     case REQUEST_IMAGE:
       return {
         data: [],
         error: null,
-        loading: true
-      } 
+        loading: true,
+      }
     case FAILURE_IMAGE:
       return {
         data: [],
         error: action.payload,
-        loading: false
-      }   
-      default:
-        return state
+        loading: false,
+      }
+    default:
+      return state
   }
 }
 
