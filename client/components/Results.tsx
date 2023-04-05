@@ -37,7 +37,21 @@ export default function Results() {
 
           {results.error && <p role={'paragraph'}> {results.error} </p>}
 
-          {results.data}
+          {results.data ? (
+            results.data.map((data) => {
+              return (
+                <>
+                  <div>
+                    <img src={data.imageUrl} alt="derp" />
+                  </div>
+                </>
+              )
+            })
+          ) : (
+            <div>
+              <p>No Data please try again</p>
+            </div>
+          )}
         </div>
       </div>
     </>
