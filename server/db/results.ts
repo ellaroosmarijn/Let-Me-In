@@ -13,6 +13,7 @@ export function getResults(
       'auth0_id as auth0Id',
       'image_id as imageId',
       'created',
-      'images.image_url as imageUrl'
+      'images.image_url as imageUrl',
+      'images.description as description'
     )
 }

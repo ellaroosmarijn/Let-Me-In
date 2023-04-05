@@ -21,6 +21,7 @@ const getResultsMockData = [
     imageId: '4',
     created: 'dateString',
     imageUrl: 'image string',
+    description: 'Description of image',
   },
 ]
 
