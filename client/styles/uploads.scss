@@ -3,4 +3,22 @@
   flex-direction: grid;
   text-align: center; 
   justify-content: center;
+  & > ul{
+    display: grid;
+    
+    grid-template-columns: repeat(2,5fr);
+    grid-gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  &> li{
+    text-align: center;
+    padding: 20px;       
+  }
+  >& img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;    
+  }
 }
