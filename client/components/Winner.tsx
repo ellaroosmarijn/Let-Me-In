@@ -1,29 +1,33 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { postResultAdd } from '../actions/winner'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function Winner() {
   const dispatch = useAppDispatch()
+  const { getAccessTokenSilently } = useAuth0()
+  const navigate = useNavigate()
   const winStatus = useAppSelector((state) => state.play)
 
   useEffect(() => {
     async function ifImage() {
       if (winStatus.data) {
-        return dispatch(postResultAdd(winStatus.data))
+        const token = await getAccessTokenSilently()
+        return dispatch(postResultAdd(winStatus.data, token))
       }
     }
 
     function ifNoImage() {
-      return <Navigate to="/play" />
+      return navigate('/play')
     }
     if (winStatus.data) {
       ifImage()
     } else {
       ifNoImage()
     }
-  }, [dispatch, winStatus.data])
+  }, [dispatch, getAccessTokenSilently, navigate, winStatus.data])
 
   return (
     <>

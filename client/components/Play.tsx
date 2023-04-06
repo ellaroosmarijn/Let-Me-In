@@ -105,7 +105,7 @@ function handleClick(index: number, image: Image) {
     setFlippedIndex(index)
     setHeaderText('You Found the Correct Meme!')
     setTimeout(() => {
-      navigate('/winner')
+      navigate('/play/winner')
     }, 2000)
   } else if (flippedIndex === null && !activeCard) {
       setActiveCard(true)

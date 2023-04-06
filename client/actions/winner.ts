@@ -32,11 +32,11 @@ export function postResultAddRejected(error: string): WinnerAction {
   }
 }
 
-export function postResultAdd(image: Image): ThunkAction {
+export function postResultAdd(image: Image, token: string): ThunkAction {
   return (dispatch) => {
     dispatch(postResultAddPending())
     const imageId = { imageId: image.id }
-    return saveResult(imageId)
+    return saveResult(imageId, token)
       .then(() => {
         dispatch(postResultAddFulfilled(image))
       })
