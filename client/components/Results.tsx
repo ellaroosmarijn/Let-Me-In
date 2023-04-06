@@ -20,37 +20,46 @@ export default function Results() {
 
   return (
     <>
+      <div className="resultsHeader">
+        <h1>Congrats on being let in!</h1>
+      </div>
       <div className="results">
         {results.loading && (
           <img src="/assets/loading.gif" className="loader" alt="loading" />
         )}
         {results.error && <p role="paragraph"> {results.error} </p>}
         {isAuthenticated ? (
-          <div>
-            {results.data ? (
-              results.data.length !== 0 ? (
-                results.data.map((data) => {
-                  return (
-                    <div key={data.id}>
-                      <h4>{data.description}</h4>
-                      <img src={data.imageUrl} alt={data.description} />
-                    </div>
-                  )
-                })
+          <>
+            <div className="resultsData">
+              {results.data ? (
+                results.data.length !== 0 ? (
+                  results.data.map((data) => {
+                    return (
+                      <div key={data.id} className="resultsImage">
+                        <h4>{data.description}</h4>
+                        <img
+                          src={data.imageUrl}
+                          alt={data.description}
+                          className="resultsImg"
+                        />
+                      </div>
+                    )
+                  })
+                ) : (
+                  <div>
+                    <h4>{`If you don't play, you can't have any results. How can you have any results if you don't play?`}</h4>
+                    <Link to="/play">
+                      <button>Go Play!</button>
+                    </Link>
+                  </div>
+                )
               ) : (
                 <div>
-                  <h4>{`If you don't play, you can't have any results. How can you have any results if you don't play?`}</h4>
-                  <Link to="/play">
-                    <button>Go Play!</button>
-                  </Link>
+                  <p>No data!</p>
                 </div>
-              )
-            ) : (
-              <div>
-                <p>No data!</p>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          </>
         ) : (
           <div>
             <div>

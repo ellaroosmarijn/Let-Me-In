@@ -1,7 +1,31 @@
+.resultsHeader{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 .results {
 display: flex;
-flex-direction: column;
+// flex-wrap: wrap;
+flex-direction: row;
 text-align: center;
 justify-content: center;
-align-items: center;
+// align-items: center;
+}
+
+.resultsData{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 75%;
+  
+}
+
+.resultsImage {
+  padding: 20px 20px 20px 20px;
+}
+.resultsImg {
+  flex-shrink:10;
+  flex-basis: auto;
 }
