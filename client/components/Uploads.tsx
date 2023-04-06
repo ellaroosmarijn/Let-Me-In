@@ -22,7 +22,7 @@ export default function Uploads() {
   }
   return (
     <>
-      <h1>LET MEEE INNN! Uploads</h1>
+      <h1>Let Me In! Uploads Page</h1>
       <div className="uploads">
         {uploads.loading && (
           <img src="/assets/loading.gif" className="loader" alt="loading" />
