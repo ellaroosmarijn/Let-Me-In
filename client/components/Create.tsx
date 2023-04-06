@@ -47,8 +47,9 @@ function Create() {
       description,
       imageUrl,
     }
-    dispatch(addImage(imageData, selectedFile, accessToken))
     clearForm()
+    dispatch(addImage(imageData, selectedFile, accessToken))
+
     // if (!loading) {
     //   navigate('/uploads')
     // }
