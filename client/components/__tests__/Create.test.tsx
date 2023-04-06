@@ -1,7 +1,7 @@
 import nock from 'nock'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { screen, render, within } from '@testing-library/react'
+import { screen, render, within, act, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
@@ -46,9 +46,53 @@ describe('<Create />', () => {
     })
     expect(buttonItem).toHaveTextContent('Upload')
   })
-  it.todo(
-    'if any of the value of 3 inputs is null, the submit button should be disabled'
-  )
 })
 
-//findByRole('button', {value: {text: /Upload/i}})
+describe('Form validation', () => {
+  it('if all fields are empty the submit button should be disabled', async () => {
+    render(
+      <MemoryRouter initialEntries={['/Create']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </MemoryRouter>
+    )
+    const buttonItem = await screen.findByRole('button', {
+      name: 'Upload',
+    })
+    expect(buttonItem).toHaveAttribute('data-disabled', 'true')
+  })
+
+  it('if all fields are filled the submit button should be enabled', async () => {
+    render(
+      <MemoryRouter initialEntries={['/Create']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </MemoryRouter>
+    )
+    const file = new File(['hello'], 'hello.png', { type: 'image/png' })
+    const nameInput = await screen.getByRole('textbox', { name: 'Title' })
+    const descriptionInput = await screen.getByRole('textbox', {
+      name: 'Description',
+    })
+
+    const buttonItem = await screen.findByRole('button', {
+      name: 'Upload',
+    })
+    const fileUpload = await screen.getByRole('button', {
+      name: 'fileUpload',
+    })
+    console.log(fileUpload)
+    act(() => {
+      userEvent.type(nameInput, 'Test')
+      userEvent.type(descriptionInput, 'Test')
+      fireEvent.change(fileUpload, { target: { value: file } })
+    })
+
+    expect(buttonItem).toHaveAttribute('data-disabled', 'false')
+  })
+})
+
+//fireEvent.change(inputVariable, {target: {value: 'a'}})
+//userEvent.type(screen.getByRole('textbox'), 'Hello,{enter}World!')

@@ -114,7 +114,7 @@ function Create() {
           <Textarea
             label="Description"
             id="description"
-            name="decription"
+            name="description"
             value={description}
             onChange={handleDescriptionChange}
             required={true}
@@ -132,6 +132,7 @@ function Create() {
                 label="Upload image"
                 withAsterisk
                 onChange={setSelectedFile}
+                name="fileUpload"
               />
             </Tabs.Panel>
 
@@ -141,6 +142,8 @@ function Create() {
                 type="text"
                 value={imageUrl}
                 onChange={handleImageUrlChange}
+                name="Image URL"
+                role="button"
               />
             </Tabs.Panel>
           </Tabs>
