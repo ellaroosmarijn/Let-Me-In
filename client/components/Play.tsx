@@ -5,7 +5,6 @@ import { Image } from '../../models/image'
 import { useNavigate } from "react-router-dom"
 import shuffleArray from '../helpers/playLib'
 import { fetchPlayContent } from '../actions/play'
-import React from 'react'
 
 export default function Play() {
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
@@ -95,8 +94,8 @@ export default function Play() {
   
   useEffect(() => {
     const updatedData = {...data, isWinning: true}
-    const dataArr = [...arr, updatedData]
-    const newShuffledArray = shuffleArray(dataArr)
+    const dataArr = [...arr, updatedData] as Image[]
+    const newShuffledArray = shuffleArray(dataArr) as Image[]
     setShuffledArray(newShuffledArray)
   }, [arr, data])
 
@@ -131,7 +130,7 @@ function handleClick(index: number, image: Image) {
         {shuffledArray.map((image, index) => {
           return (
             <div
-              key={image?.id}
+              key={index}
               className={flippedIndex === index ? 'flipped' : ''}
               onClick={() => handleClick(index, image)}
               onKeyDown={(event) =>{if(event.key === 'Enter'){ handleClick(index, image)}}}
@@ -139,7 +138,7 @@ function handleClick(index: number, image: Image) {
               role ='button'
               >
               <div></div>
-              <img key={image?.id} src={image?.imageUrl} alt="facedown cards" />
+              <img src={image?.imageUrl} alt="facedown cards" />
             </div>
           )
         })}

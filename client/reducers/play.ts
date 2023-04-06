@@ -12,21 +12,8 @@ interface PlayState {
   loading: boolean
 }
 
-// initialState.data to be an empty array upon "Play" ticket completion
 const initialState: PlayState = {
   data: undefined,
-  // data: {image:
-  //   {
-  //     id: 1,
-  //     uploaderId: '1',
-  //     name: 'Let Me In',
-  //     description: 'LET ME INNNNNNNNNNNNNNN',
-  //     imageUrl:
-  //       'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif',
-
-  //   },
-  //   isWinning: true,
-  // },
   error: undefined,
   loading: false,
 }

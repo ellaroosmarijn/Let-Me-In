@@ -1,5 +1,4 @@
 import connection from '../connection'
-
 import { getWinningImage } from '../play'
 
 beforeAll(() => {
@@ -20,7 +19,7 @@ describe('getWinningImage', () => {
     expect.assertions(5)
 
     // Act
-    const winningImage = await getWinningImage(connection)
+    const winningImage = await getWinningImage()
     
     //Assert
     expect(winningImage.id).toBeDefined()
