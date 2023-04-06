@@ -17,7 +17,7 @@ afterAll(() => {
 const testData = {
   auth0_id: '3',
   image_id: 2,
-  created: '1630565951299',
+  created: new Date(1630565951299),
 }
 
 describe('addWinnerResults', () => {

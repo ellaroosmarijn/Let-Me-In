@@ -4,7 +4,7 @@ import { Result } from '../../models/result'
 export interface Winner {
   auth0_id: string
   image_id: number
-  created: string
+  created: Date
 }
 
 export function addWinnerResults(
