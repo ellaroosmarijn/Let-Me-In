@@ -1,12 +1,12 @@
 export interface Result {
   id: number
   auth0Id: string
-  imageId: string
+  imageId: number
   created: string
 }
 
 export interface ResultCreate {
-  imageId: string
+  imageId: number
 }
 
 export interface JoinedResult extends Result {
