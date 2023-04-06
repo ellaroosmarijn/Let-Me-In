@@ -1,7 +1,7 @@
 export interface Result {
   id: number
   auth0Id: string
-  imageId: string
+  imageId: number
   created: string
 }
 

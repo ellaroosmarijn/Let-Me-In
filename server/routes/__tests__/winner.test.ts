@@ -12,7 +12,9 @@ afterAll(() => {
   jest.restoreAllMocks()
 })
 
-const addResultTestData = [{ id: 3 }]
+const addResultTestData = [
+  { id: 4, auth0Id: '3', imageId: 2, created: '1630565951369' },
+]
 
 const newResults = [
   {

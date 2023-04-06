@@ -4,7 +4,7 @@ import { Result } from '../../models/result'
 export interface Winner {
   auth0_id: string
   image_id: number
-  created: Date
+  created: string
 }
 
 export function addWinnerResults(
@@ -17,4 +17,9 @@ export function addWinnerResults(
     'image_id as imageId',
     'created',
   ])
+}
+
+// get result by id
+export function getById(id: number, db = connection) {
+  return db('results').select().where({ id })
 }
