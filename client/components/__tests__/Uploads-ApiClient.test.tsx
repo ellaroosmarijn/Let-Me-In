@@ -39,8 +39,9 @@ describe('<Uploads />', () => {
       </Provider>
     )
     const uploadData = await screen.findByText(/An unknown error occurred/i)
+
     // Assert
-    console.log((getUploads as jest.Mock).mock.calls)
+
     expect(getUploads).toHaveBeenCalledWith(mockedSub)
     expect(uploadData).toBeInTheDocument()
   })

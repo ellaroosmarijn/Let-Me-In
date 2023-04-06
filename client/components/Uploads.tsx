@@ -23,32 +23,23 @@ export default function Uploads() {
   return (
     <>
       <h1>UPLOADS PAGE :D</h1>
-      <div>
+      <div className="uploads">
         {uploads.loading && (
           <img src="/assets/loading.gif" className="loader" alt="loading" />
         )}
+
         {uploads.error && <p role={'paragraph'}>{uploads.error}</p>}
-        {uploads.data ? (
-          <ul>
-            {uploads.data.map((image) => {
-              return (
-                <li key={image.id}>
-                  <h2>{image.name}</h2>
-                  <img src={image.imageUrl} alt={image.description} />
-                  <p>{image.description}</p>
-                </li>
-              )
-            })}
-          </ul>
-        ) : (
-          <div> An unknown error occurred</div>
-        )}
+
         <ul>
           {uploads.data?.map((image) => {
             return (
               <li key={image.id}>
                 <h2>{image.name}</h2>
-                <img src={image.imageUrl} alt={image.description} />
+                <img
+                  className="uploaded-images"
+                  src={image.imageUrl}
+                  alt={image.description}
+                />
                 <p>{image.description}</p>
               </li>
             )
