@@ -11,7 +11,7 @@ export default function Play() {
   const [shuffledArray, setShuffledArray] = useState<Image[]>([])
   const [activeCard, setActiveCard] = useState<boolean>(false)
   const [headerText, setHeaderText] = useState<string>('Click on a Square to Find the Winning Meme!')
-  const [arr, setArr] = useState<Image[]>([
+  const [arr] = useState<Image[]>([
     {
       id: 1001,
       isWinning: false,
