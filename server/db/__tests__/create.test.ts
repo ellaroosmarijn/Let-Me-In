@@ -22,17 +22,19 @@ describe('addImage', () => {
     }
     const uploaderId = 'testID'
     const addedimage = await db.addImage(newImageData, uploaderId)
-    const imageData = await connection('images').select()
+    const imageData = await connection('images')
+      .select()
+      .where({ id: addedimage[0].id })
+      .first()
 
-    expect(imageData).toHaveLength(5)
-    expect(imageData[4].image_url).toBe('https://test.jpg')
+    expect(imageData.image_url).toBe('https://test.jpg')
     expect(addedimage).toEqual([
       {
         id: 5,
         name: 'Test Name',
-        uploader_id: 'testID',
+        uploaderId: 'testID',
         description: 'Test Description',
-        image_url: 'https://test.jpg',
+        imageUrl: 'https://test.jpg',
       },
     ])
   })

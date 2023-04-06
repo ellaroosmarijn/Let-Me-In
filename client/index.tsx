@@ -3,9 +3,7 @@ import { Auth0Provider } from '@auth0/auth0-react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import store from './store'
-
 import App from './components/App'
-import { MantineProvider } from '@mantine/core'
 
 document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.getElementById('app') as HTMLElement).render(

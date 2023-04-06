@@ -51,8 +51,7 @@ export function addImage(
           dispatch(addImageFulfilled(addedImage))
         }
       } else {
-        imageDataInput = imageData
-        const addedImage = await apiFunction.addImage(imageDataInput, token)
+        const addedImage = await apiFunction.addImage(imageData, token)
         dispatch(addImageFulfilled(addedImage))
       }
     } catch (error) {
@@ -64,11 +63,3 @@ export function addImage(
     }
   }
 }
-// action to say that we are uploading the image - which sets isloading to true
-// // upload the image to amazon, and get the url back
-// // create the image object, with the form fdata and the new image url from amazon
-// action to say that the image was uploaded, that will set the redux state
-// // update the state for the uploads page
-// If anything goes wrong, action to say that there was an error, and what the error was.
-
-// use URL, Upload file to AWS S3

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 
-import createReducer from './create'
 import homeReducer from './home'
 import playReducer from './play'
+import createReducer from './create'
 
 export default combineReducers({
   home: homeReducer,

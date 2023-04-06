@@ -1,5 +1,4 @@
 import request from 'supertest'
-//import express from 'express'
 import checkJwt from '../../auth0'
 import { JwtRequest } from '../../auth0'
 jest.mock('../../auth0')
@@ -23,7 +22,10 @@ describe('/api/v1/create', () => {
 
   const addImageResponse = {
     id: 12,
-    image_url: 'https://test.jpg',
+    name: 'Test Name',
+    uploaderId: 'testID',
+    description: 'Test Description',
+    imageUrl: 'https://test.jpg',
   }
 
   jest.mocked(db.addImage).mockResolvedValue([addImageResponse])
@@ -34,7 +36,7 @@ describe('/api/v1/create', () => {
       .post('/api/v1/create')
       .send(newImageData)
     expect(actual.body[0].id).toBe(12)
-    expect(actual.body[0].image_url).toBe('https://test.jpg')
+    expect(actual.body[0].imageUrl).toBe('https://test.jpg')
   })
 
   it('should call addImage with an image object and an Auth0 id', async () => {
@@ -50,7 +52,7 @@ describe('/api/v1/create', () => {
     const actual = await request(server)
       .post('/api/v1/create')
       .send(newImageData)
-    expect(actual.text).toBe('Whoops, something went wrong')
+    expect(actual.status).toBe(500)
   })
 
   it('should display an custom error message if the DB function fails and does not return an error', async () => {
@@ -58,7 +60,6 @@ describe('/api/v1/create', () => {
     const actual = await request(server)
       .post('/api/v1/create')
       .send(newImageData)
-    console.log(actual.text)
     expect(actual.text).toBe('An unknown error has occurred')
   })
 })

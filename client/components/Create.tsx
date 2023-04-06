@@ -1,31 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { addImage } from '../actions/create'
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm } from '@mantine/form'
 import {
   Button,
-  FileInput,
   Space,
   Tabs,
   Text,
   Textarea,
   TextInput,
   Title,
-  Notification,
 } from '@mantine/core'
 
 function Create() {
   const dispatch = useAppDispatch()
-  const { data, error, loading } = useAppSelector((state) => state.create)
+  const { error, loading } = useAppSelector((state) => state.create)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [count, setCount] = useState(0)
   const { getAccessTokenSilently } = useAuth0()
-  const navigate = useNavigate()
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
@@ -47,12 +41,8 @@ function Create() {
       description,
       imageUrl,
     }
-    clearForm()
     dispatch(addImage(imageData, selectedFile, accessToken))
-
-    // if (!loading) {
-    //   navigate('/uploads')
-    // }
+    clearForm()
   }
   function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
@@ -87,7 +77,7 @@ function Create() {
           data-disabled
           sx={{ '&[data-disabled]': { pointerEvents: 'all' } }}
           onClick={(event) => event.preventDefault()}
-          aria-describedby="upload" // added for testing
+          aria-describedby="upload"
         >
           Upload
         </Button>
@@ -138,14 +128,6 @@ function Create() {
                 role="button"
                 onChange={handleFileUpload}
               />
-              {/* <FileInput
-                placeholder="Click here to select file"
-                label="Upload image"
-                withAsterisk
-                onChange={setSelectedFile}
-                name="fileUpload"
-                data-testid="fileInput"
-              /> */}
             </Tabs.Panel>
 
             <Tabs.Panel value="url" pt="xs">

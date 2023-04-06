@@ -9,12 +9,12 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const auth0Id = req.auth?.sub
     if (auth0Id) {
-      const result = await db.addImage(req.body, auth0Id)
-      return res.json(result)
+      const newImage = await db.addImage(req.body, auth0Id)
+      return res.json(newImage)
     }
   } catch (err) {
     if (err instanceof Error) {
-      return res.send(err.message)
+      return res.sendStatus(500)
     } else {
       return res.send('An unknown error has occurred')
     }
