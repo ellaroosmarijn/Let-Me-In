@@ -4,6 +4,7 @@ export interface Image {
   name: string
   description: string
   imageUrl: string
+  isWinning?: boolean
 }
 
 export interface ImageCreate {
