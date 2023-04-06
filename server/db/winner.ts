@@ -18,8 +18,3 @@ export function addWinnerResults(
     'created',
   ])
 }
-
-// get result by id
-export function getById(id: number, db = connection) {
-  return db('results').select().where({ id })
-}

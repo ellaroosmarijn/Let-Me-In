@@ -18,7 +18,6 @@ export function postResultAddPending(): WinnerAction {
   } as WinnerAction
 }
 
-// result: Result
 export function postResultAddFulfilled(image: Image): WinnerAction {
   return {
     type: POST_RESULT_ADD_FULFILLED,
