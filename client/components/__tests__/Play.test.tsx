@@ -7,6 +7,9 @@ import '@testing-library/jest-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import App from '../App'
 import { initialiseStore } from '../../store'
+import { Image } from '../../../models/image'
+import shuffleArray from '../../helpers/playLib'
+jest.mock('../../helpers/playLib')
 jest.mock('@auth0/auth0-react')
 
 afterAll(() => {
@@ -14,6 +17,7 @@ afterAll(() => {
 })
 
 jest.mocked(useAuth0 as jest.Mock).mockReturnValue({getAccessTokenSilently: jest.fn(async ()=> 'mockAccessToken')})
+jest.mocked(shuffleArray).mockImplementation((array: Image[]) => array)
 const store = initialiseStore()
 
 const playImageMockData = {
