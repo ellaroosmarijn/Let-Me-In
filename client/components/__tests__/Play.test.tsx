@@ -31,13 +31,11 @@ describe('Test Play Component', ()=> {
     const scope1 = nock('http://localhost').get('/api/v1/play').reply(200, playImageMockData)
 
     render(
-
-        <Router initialEntries={['/play']}>
-          <Provider store={store}>
-            <App/>
-          </Provider>
-        </Router>
-      
+      <Router initialEntries={['/play']}>
+        <Provider store={store}>
+          <App/>
+        </Provider>
+      </Router>
     )
 
     await waitFor(()=> expect(scope1.isDone()).toBeTruthy())
