@@ -83,9 +83,7 @@ export default function Play() {
     },
   ])
 
-
-
-
+  const navigate = useNavigate()
   const { loading, error, data } = useAppSelector((state) => state.play)
   const dispatch = useAppDispatch()
   const { getAccessTokenSilently } = useAuth0()
@@ -98,28 +96,25 @@ export default function Play() {
 
     dispatchFetchPlayContent()
   }, [dispatch, getAccessTokenSilently])
-
+  
   useEffect(() => {
     const updatedData = {...data, isWinning: true}
-    console.log(data)
-    console.log(updatedData)
-    
     const dataArr = [...arr, updatedData]
-    console.log(dataArr)
     const newShuffledArray = shuffle(dataArr)
-    console.log(shuffledArray)
-    
     setShuffledArray(newShuffledArray)
   }, [arr, data])
 
-
-
   function handleClick(index: number, image: Image) {
+    
 
     if(image.isWinning) {
       setActiveCard(true)
     setFlippedIndex(index)
     setHeaderText('You Found the Correct Meme!')
+    setTimeout(() => {
+      navigate('/results')
+    }, 2000)
+   
     } else if (flippedIndex === null && !activeCard) {
         setActiveCard(true)
         setFlippedIndex(index)
@@ -137,14 +132,17 @@ export default function Play() {
       <h1>{headerText}</h1>
       <div>
         {error && <p>{error}</p>}
-        {loading && <img src="/loading.gif" alt="loading spinner" />}
+        {loading && <img src="images/loading.gif" alt="loading spinner" />}
         {shuffledArray.map((image, index) => {
           return (
             <div
               key={image?.id}
               className={flippedIndex === index ? 'flipped' : ''}
               onClick={() => handleClick(index, image)}
-            >
+              onKeyDown={(event) =>{if(event.key === 'Enter'){ handleClick(index, image)}}}
+              tabIndex={0}
+              role ='button'
+              >
               <div></div>
               <img key={image?.id} src={image?.imageUrl} alt="facedown cards" />
             </div>
