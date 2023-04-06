@@ -59,7 +59,6 @@ describe('<Home />', () => {
     await waitFor(() => expect(scope.isDone()).toBeTruthy())
 
     const errorMessage = screen.getByRole('paragraph')
-    // console.log(errorMessage)
 
     // Assert
     expect(errorMessage).toHaveTextContent('Internal Server Error')
