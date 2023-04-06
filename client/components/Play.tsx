@@ -3,13 +3,9 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Image } from '../../models/image'
 import { useNavigate } from "react-router-dom"
-
-import shuffle from 'fisher-yates'
-
+// import shuffle from 'fisher-yates'
 import { fetchPlayContent } from '../actions/play'
 import React from 'react'
-
-
 
 export default function Play() {
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
@@ -97,22 +93,35 @@ export default function Play() {
     dispatchFetchPlayContent()
   }, [dispatch, getAccessTokenSilently])
   
+  function shuffleArray(array: []) {
+    const newArray = [...array]
+    const length = newArray.length
+  
+    for (let start = 0; start < length; start++) {
+      const randomPosition = Math.floor((newArray.length - start) * Math.random())
+      const randomItem = newArray.splice(randomPosition, 1)
+  
+      newArray.push(...randomItem)
+    }
+  
+    return newArray
+  }
+  
   useEffect(() => {
     const updatedData = {...data, isWinning: true}
     const dataArr = [...arr, updatedData]
-    const newShuffledArray = shuffle(dataArr)
+    const newShuffledArray = shuffleArray(dataArr)
     setShuffledArray(newShuffledArray)
   }, [arr, data])
 
-  function handleClick(index: number, image: Image) {
+function handleClick(index: number, image: Image) {
     
-
-    if(image.isWinning) {
+  if(image.isWinning) {
       setActiveCard(true)
     setFlippedIndex(index)
     setHeaderText('You Found the Correct Meme!')
     setTimeout(() => {
-      navigate('/results')
+      navigate('/winner')
     }, 2000)
    
     } else if (flippedIndex === null && !activeCard) {
