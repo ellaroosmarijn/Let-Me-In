@@ -1,0 +1,54 @@
+.play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  & > h1{
+    font-size: 32px;
+  }
+   
+  & > div {
+      
+    & > div {
+      max-width: 1020px;
+      width:100%;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0 auto;
+      perspective: 1000px;
+
+    & > div {
+      width:300px;
+      height: 225px;
+      border-radius: 15px;
+      margin: 8px 20px;
+      position: relative;
+      transition: transform 1500ms;
+      transform-style: preserve-3d;
+      cursor: pointer;
+
+    &.flipped {
+      transform: rotateY(180deg);
+    }
+
+    & > img, & > div{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 15px;
+      backface-visibility: hidden;
+    }
+
+    & > img {
+    transform: rotateY(180deg)
+    }
+   
+    & > div {
+      background-color: #bbada0;
+    }
+    }
+    }
+  }
+}
