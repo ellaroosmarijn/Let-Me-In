@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Image } from '../../models/image'
+import { useNavigate } from "react-router-dom"
+
 import shuffle from 'fisher-yates'
 
 import { fetchPlayContent } from '../actions/play'
 import React from 'react'
 
+
+
 export default function Play() {
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
   const [shuffledArray, setShuffledArray] = useState<Image[]>([])
   const [activeCard, setActiveCard] = useState<boolean>(false)
+  const [headerText, setHeaderText] = useState<string>('Click on a Square to Find the Winning Meme!')
   const [arr, setArr] = useState<Image[]>([
     {
       id: 1001,
@@ -78,6 +83,9 @@ export default function Play() {
     },
   ])
 
+
+
+
   const { loading, error, data } = useAppSelector((state) => state.play)
   const dispatch = useAppDispatch()
   const { getAccessTokenSilently } = useAuth0()
@@ -92,25 +100,41 @@ export default function Play() {
   }, [dispatch, getAccessTokenSilently])
 
   useEffect(() => {
-    const dataArr = [...arr, data]
+    const updatedData = {...data, isWinning: true}
+    console.log(data)
+    console.log(updatedData)
+    
+    const dataArr = [...arr, updatedData]
+    console.log(dataArr)
     const newShuffledArray = shuffle(dataArr)
+    console.log(shuffledArray)
+    
     setShuffledArray(newShuffledArray)
   }, [arr, data])
 
-  function handleClick(index: number) {
-    setActive(true)
-    if (setActive) {
-      setFlippedIndex(index)
-      setTimeout(() => {
+
+
+  function handleClick(index: number, image: Image) {
+
+    if(image.isWinning) {
+      setActiveCard(true)
+    setFlippedIndex(index)
+    setHeaderText('You Found the Correct Meme!')
+    } else if (flippedIndex === null && !activeCard) {
+        setActiveCard(true)
+        setFlippedIndex(index)
+        setHeaderText('Wrong One, Try Again!')
+        setTimeout(() => {
         setFlippedIndex(null)
-        setActive(false)
+        setActiveCard(false)
+        setHeaderText('Click on a Square to Find the Winning Meme!')
       }, 2000)
     }
   }
 
   return (
     <div className="play">
-      <h1>Catchy Header</h1>
+      <h1>{headerText}</h1>
       <div>
         {error && <p>{error}</p>}
         {loading && <img src="/loading.gif" alt="loading spinner" />}
@@ -119,7 +143,7 @@ export default function Play() {
             <div
               key={image?.id}
               className={flippedIndex === index ? 'flipped' : ''}
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(index, image)}
             >
               <div></div>
               <img key={image?.id} src={image?.imageUrl} alt="facedown cards" />
