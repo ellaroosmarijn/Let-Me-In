@@ -1,13 +1,13 @@
 import type { Image } from '../../models/image'
 import {
   UploadsAction,
-  RECEIVE_IMAGE,
-  REQUEST_IMAGE,
-  FAILURE_IMAGE,
+  RECEIVE_UPLOAD_IMAGE,
+  REQUEST_UPLOAD_IMAGE,
+  FAILURE_UPLOAD_IMAGE,
 } from '../actions/uploads'
 
 interface UploadState {
-  data: Image[] | undefined
+  data: Image[]
   error: string | null
   loading: boolean
 }
@@ -23,19 +23,19 @@ function uploadReducer(
   action: UploadsAction
 ): UploadState {
   switch (action.type) {
-    case RECEIVE_IMAGE:
+    case RECEIVE_UPLOAD_IMAGE:
       return {
         data: action.payload,
         error: null,
         loading: false,
       }
-    case REQUEST_IMAGE:
+    case REQUEST_UPLOAD_IMAGE:
       return {
         data: [],
         error: null,
         loading: true,
       }
-    case FAILURE_IMAGE:
+    case FAILURE_UPLOAD_IMAGE:
       return {
         data: [],
         error: action.payload,

@@ -11,7 +11,6 @@ jest.mock('@auth0/auth0-react')
 
 beforeEach(() => {
   jest.resetAllMocks()
-  jest.resetModules()
 })
 
 afterAll(() => {

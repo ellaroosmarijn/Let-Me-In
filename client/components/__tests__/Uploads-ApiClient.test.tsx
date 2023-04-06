@@ -12,8 +12,7 @@ jest.mock('../../apis/uploads')
 
 beforeEach(() => {
   jest.resetAllMocks()
-  jest.resetModules()
-})
+  })
 
 afterAll(() => {
   jest.restoreAllMocks()
@@ -41,7 +40,6 @@ describe('<Uploads />', () => {
     const uploadData = await screen.findByText(/An unknown error occurred/i)
 
     // Assert
-
     expect(getUploads).toHaveBeenCalledWith(mockedSub)
     expect(uploadData).toBeInTheDocument()
   })
