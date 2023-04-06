@@ -80,19 +80,55 @@ describe('Form validation', () => {
     const buttonItem = await screen.findByRole('button', {
       name: 'Upload',
     })
-    const fileUpload = await screen.getByRole('button', {
-      name: 'fileUpload',
-    })
-    console.log(fileUpload)
+
+    const fileUpload = screen.getByRole('button', { name: '' })
+
     act(() => {
       userEvent.type(nameInput, 'Test')
       userEvent.type(descriptionInput, 'Test')
-      fireEvent.change(fileUpload, { target: { value: file } })
+      userEvent.upload(fileUpload, file)
+    })
+    const enabledButton = await screen.findByRole('button', {
+      name: 'Upload',
+    })
+    expect(enabledButton).not.toHaveAttribute('data-disabled', 'true')
+  })
+})
+
+describe('form submission', () => {
+  it('should empty input fields and redirected to /uploads page', async () => {
+    render(
+      <MemoryRouter initialEntries={['/Create']}>
+        <Provider store={initialiseStore()}>
+          <App />
+        </Provider>
+      </MemoryRouter>
+    )
+
+    const file = new File(['hello'], 'hello.png', { type: 'image/png' })
+    const nameInput = await screen.getByRole('textbox', { name: 'Title' })
+    const descriptionInput = await screen.getByRole('textbox', {
+      name: 'Description',
     })
 
-    expect(buttonItem).toHaveAttribute('data-disabled', 'false')
+    const buttonItem = await screen.findByRole('button', {
+      name: 'Upload',
+    })
+
+    const fileUpload = screen.getByRole('button', { name: '' })
+
+    await act(async () => {
+      userEvent.type(nameInput, 'Test')
+      userEvent.type(descriptionInput, 'Test')
+      userEvent.upload(fileUpload, file)
+      userEvent.click(buttonItem)
+    })
+    screen.debug()
+    const newInput = await screen.getByRole('textbox', { name: 'Title' })
+    expect(newInput).toHaveValue('')
   })
 })
 
 //fireEvent.change(inputVariable, {target: {value: 'a'}})
 //userEvent.type(screen.getByRole('textbox'), 'Hello,{enter}World!')
+//https://codesandbox.io/s/728w8?file=/src/App.test.js

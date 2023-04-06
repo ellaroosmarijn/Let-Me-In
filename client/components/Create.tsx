@@ -26,16 +26,15 @@ function Create() {
   const [count, setCount] = useState(0)
   const { getAccessTokenSilently } = useAuth0()
   const navigate = useNavigate()
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }
-
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDescription(e.target.value)
   }
-
   const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageUrl(e.target.value)
   }
@@ -50,8 +49,13 @@ function Create() {
     }
     dispatch(addImage(imageData, selectedFile, accessToken))
     clearForm()
-    if (!loading) {
-      navigate('/uploads')
+    // if (!loading) {
+    //   navigate('/uploads')
+    // }
+  }
+  function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files) {
+      setSelectedFile(event.target.files[0])
     }
   }
 
@@ -127,13 +131,20 @@ function Create() {
             </Tabs.List>
 
             <Tabs.Panel value="upload" pt="xs">
-              <FileInput
+              <input
+                type="file"
+                name="imageUpload"
+                role="button"
+                onChange={handleFileUpload}
+              />
+              {/* <FileInput
                 placeholder="Click here to select file"
                 label="Upload image"
                 withAsterisk
                 onChange={setSelectedFile}
                 name="fileUpload"
-              />
+                data-testid="fileInput"
+              /> */}
             </Tabs.Panel>
 
             <Tabs.Panel value="url" pt="xs">
