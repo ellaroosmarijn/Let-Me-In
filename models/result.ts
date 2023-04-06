@@ -8,3 +8,8 @@ export interface Result {
 export interface ResultCreate {
   imageId: string
 }
+
+export interface JoinedResult extends Result {
+  description: string
+  imageUrl: string
+}
