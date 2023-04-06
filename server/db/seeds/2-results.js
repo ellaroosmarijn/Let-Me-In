@@ -32,7 +32,7 @@ exports.seed = async (knex) => {
     },
     {
       id: 6,
-      auth0_id: '3',
+      auth0_id: '2',
       image_id: 3,
       created: new Date(Date.now()),
     },
