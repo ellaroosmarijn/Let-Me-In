@@ -24,36 +24,32 @@ export default function Results() {
         {results.loading && (
           <img src="/assets/loading.gif" className="loader" alt="loading" />
         )}
-        {results.error && <p role={'paragraph'}> {results.error} </p>}
+        {results.error && <p role="paragraph"> {results.error} </p>}
         {isAuthenticated ? (
           <div>
-            <div>
-              {results.data ? (
-                results.data.length !== 0 ? (
-                  results.data.map((data) => {
-                    return (
-                      <>
-                        <div>
-                          <h4>{data.description}</h4>
-                          <img src={data.imageUrl} alt={data.description} />                          
-                        </div>
-                      </>
-                    )
-                  })
-                ) : (
-                  <div>
-                    <h4>{`If you don't play, you can't have any results. How can you have any results if you don't play?`}</h4>
-                    <Link to="/play">
-                      <button>Go Play!</button>
-                    </Link>
-                  </div>
-                )
+            {results.data ? (
+              results.data.length !== 0 ? (
+                results.data.map((data) => {
+                  return (
+                    <div key={data.id}>
+                      <h4>{data.description}</h4>
+                      <img src={data.imageUrl} alt={data.description} />
+                    </div>
+                  )
+                })
               ) : (
                 <div>
-                  <p>No data!</p>
+                  <h4>{`If you don't play, you can't have any results. How can you have any results if you don't play?`}</h4>
+                  <Link to="/play">
+                    <button>Go Play!</button>
+                  </Link>
                 </div>
-              )}
-            </div>
+              )
+            ) : (
+              <div>
+                <p>No data!</p>
+              </div>
+            )}
           </div>
         ) : (
           <div>

@@ -13,16 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 const mockGetAccessToken = jest.fn()
 
-jest.mock('@auth0/auth0-react', () => {
-  return {
-    useAuth0: jest.fn(() => ({
-      getAccessTokenSilently: mockGetAccessToken,
-      isAuthenticated: true,
-      logout: jest.fn(),
-      loginWithRedirect: jest.fn(),
-    })),
-  }
-})
+jest.mock('@auth0/auth0-react')
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -46,11 +37,20 @@ const ResultsMockData = [
 describe('<Results />', () => {
   it('successfully shows image from results table', async () => {
     // Arrange
-    expect.assertions(3)
+    expect.assertions(4)
 
     const scope = nock('http://localhost')
       .get('/api/v1/results')
       .reply(200, ResultsMockData)
+
+    const mockGetAccessToken = jest.fn()
+
+    jest.mocked(useAuth0 as jest.Mock).mockReturnValue({
+      getAccessTokenSilently: mockGetAccessToken,
+      isAuthenticated: true,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+    })
 
     // Act
     render(
@@ -63,9 +63,39 @@ describe('<Results />', () => {
 
     await waitFor(() => expect(scope.isDone()).toBeTruthy())
 
-    const results = screen.getAllByAltText(ResultsMockData[0].description)
+    const result = screen.getByAltText(ResultsMockData[0].description)
 
     // Assert
-    expect(results).toHaveAttribute('src', ResultsMockData[0].imageUrl)
+    expect(result).toHaveAttribute('src', ResultsMockData[0].imageUrl)
+  })
+  it.only('should display an error when there is not data matching auth0Id', async () => {
+    expect.assertions(3)
+
+    const scope = nock('http://localhost').get('/api/v1/results').reply(500)
+
+    const mockGetAccessToken = jest.fn()
+
+    jest.mocked(useAuth0 as jest.Mock).mockReturnValue({
+      getAccessTokenSilently: mockGetAccessToken,
+      isAuthenticated: true,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+    })
+
+    // Act
+    render(
+      <Provider store={initialiseStore()}>
+        <MemoryRouter initialEntries={['/results']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
+    )
+    // asserts
+    await waitFor(() => expect(scope.isDone()).toBeTruthy())
+    screen.debug()
+    const errorMessage = screen.getByRole('paragraph')
+    console.log(errorMessage)
+    console.log(errorMessage.textContent)
+    expect(errorMessage).toHaveTextContent('Internal Server Error')
   })
 })

@@ -23,10 +23,6 @@ describe('getResults', () => {
     const results = await getResults('1')
 
     // Assert
-<<<<<<< HEAD
-    console.log(results)
-=======
->>>>>>> results-backend-david-raghav
     expect(results[2].id).toBe(3)
     expect(results[1].auth0Id).toBe('1')
     expect(results[2].imageId).toBe(3)
@@ -34,9 +30,6 @@ describe('getResults', () => {
     expect(results[0].imageUrl).toBe(
       'https://media.tenor.com/bHGUqVIKzhoAAAAC/let-me-in-eric-andre.gif'
     )
-<<<<<<< HEAD
-=======
     expect(results[1].description).toBe('Judge Judy time')
->>>>>>> results-backend-david-raghav
   })
 })
