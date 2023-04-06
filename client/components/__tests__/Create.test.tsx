@@ -182,10 +182,6 @@ describe('form submission', () => {
       name: 'Description',
     })
 
-    const buttonItem = await screen.findByRole('button', {
-      name: 'Upload',
-    })
-
     const fileUpload = screen.getByRole('button', { name: '' })
 
     act(() => {

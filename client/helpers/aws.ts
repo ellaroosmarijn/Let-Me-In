@@ -1,7 +1,5 @@
 import AWS from 'aws-sdk'
-import { useState } from 'react'
 const S3_BUCKET = 'letmein-image'
-const REGION = 'ap-southeast-2'
 
 AWS.config.update({
   accessKeyId: 'AKIAWJMNYKETP4GSCQJL',

@@ -19,6 +19,7 @@ export default function App() {
         <Route path='/results' element={<Results />} />
         <Route path='/create' element={<Create />} />
         <Route path='/uploads' element={<Uploads />} />
+        <Route path='/*' element={<></>} />
       </Routes>
     </div>
   )
