@@ -1,14 +1,13 @@
 import { Image } from "../../models/image"
 
+// To learn more about the fisher-yates algorithm check the following links
+// https://sebhastian.com/fisher-yates-shuffle-javascript/
+// https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
 export default function shuffleArray(array: Image[]):Image[] {
-  const newArray = [...array]
-  const length = newArray.length
-
-  for (let start = 0; start < length; start++) {
-    const randomPosition = Math.floor((newArray.length - start) * Math.random())
-    const randomItem = newArray.splice(randomPosition, 1)
-    newArray.push(...randomItem)
+  const shuffledArray = array
+  for (let i = array.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i+ 1));
+    [array[randomIndex], array[i]] = [array[i], array[randomIndex]];
   }
-
-  return newArray
-}
+  return shuffledArray
+} 

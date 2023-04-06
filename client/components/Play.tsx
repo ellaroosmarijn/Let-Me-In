@@ -95,8 +95,8 @@ export default function Play() {
     ]
     const updatedData = {...data, isWinning: true}
     const dataArr = [...arr, updatedData] as Image[]
-    const newShuffledArray = shuffleArray(dataArr) as Image[]
-    setShuffledArray(newShuffledArray)
+    const shuffledArray = shuffleArray(dataArr) as Image[]
+    setShuffledArray(shuffledArray)
   }, [data])
 
 function handleClick(index: number, image: Image) {  
