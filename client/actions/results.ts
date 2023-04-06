@@ -48,7 +48,7 @@ export function fetchResults(token: string): ThunkAction {
         dispatch(fetchResultsFulfilled(results))
       })
       .catch((err) => {
-        dispatch(fetchResultsRejected(err.errMessage))
+        dispatch(fetchResultsRejected(err.message))
       })
   }
 }

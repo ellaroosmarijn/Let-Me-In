@@ -1,17 +1,13 @@
 import nock from 'nock'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { screen, render, waitFor, act } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen, render, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import App from '../App'
 import { initialiseStore } from '../../store'
-import checkJwt from '../../../server/auth0'
 
 import { useAuth0 } from '@auth0/auth0-react'
-
-const mockGetAccessToken = jest.fn()
 
 jest.mock('@auth0/auth0-react')
 
@@ -68,8 +64,8 @@ describe('<Results />', () => {
     // Assert
     expect(result).toHaveAttribute('src', ResultsMockData[0].imageUrl)
   })
-  it.only('should display an error when there is not data matching auth0Id', async () => {
-    expect.assertions(3)
+  it('should display an error when there is not data matching auth0Id', async () => {
+    expect.assertions(4)
 
     const scope = nock('http://localhost').get('/api/v1/results').reply(500)
 
@@ -92,10 +88,8 @@ describe('<Results />', () => {
     )
     // asserts
     await waitFor(() => expect(scope.isDone()).toBeTruthy())
-    screen.debug()
+
     const errorMessage = screen.getByRole('paragraph')
-    console.log(errorMessage)
-    console.log(errorMessage.textContent)
     expect(errorMessage).toHaveTextContent('Internal Server Error')
   })
 })

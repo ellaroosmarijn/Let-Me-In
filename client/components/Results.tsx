@@ -3,12 +3,24 @@ import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { fetchResults } from '../actions/results'
 import { useAuth0 } from '@auth0/auth0-react'
+import { KeyboardEvent } from 'react'
 
 export default function Results() {
-  const { user, getAccessTokenSilently, isAuthenticated } = useAuth0()
+  const { getAccessTokenSilently, isAuthenticated, loginWithRedirect } =
+    useAuth0()
   const results = useAppSelector((state) => state.results)
   const dispatch = useAppDispatch()
-  console.log('user', user)
+
+  const handleSignIn = () => {
+    loginWithRedirect()
+  }
+
+  function handleKeyDownLogin(e: KeyboardEvent<HTMLDivElement>) {
+    e.preventDefault()
+    if (e.code == 'Enter') {
+      loginWithRedirect()
+    }
+  }
 
   useEffect(() => {
     const getAccess = async () => {
@@ -17,7 +29,6 @@ export default function Results() {
     }
     getAccess().catch(console.error)
   }, [dispatch, getAccessTokenSilently])
-
   return (
     <>
       <div className="resultsHeader">
@@ -64,9 +75,14 @@ export default function Results() {
           <div>
             <div>
               <h4>{`If you don't log in, you can't have any results. How can you have any results if you don't log in?`}</h4>
-              <Link to="/">
-                <button>Go back Home and Log in!</button>
-              </Link>
+              <div
+                onClick={handleSignIn}
+                onKeyDown={handleKeyDownLogin}
+                role="button"
+                tabIndex={0}
+              >
+                Go Login!
+              </div>
             </div>
           </div>
         )}
