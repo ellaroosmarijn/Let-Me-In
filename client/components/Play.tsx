@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Image } from '../../models/image'
 import { useNavigate } from "react-router-dom"
-// import shuffle from 'fisher-yates'
+import shuffleArray from '../helpers/playLib'
 import { fetchPlayContent } from '../actions/play'
 import React from 'react'
 
@@ -92,20 +92,6 @@ export default function Play() {
 
     dispatchFetchPlayContent()
   }, [dispatch, getAccessTokenSilently])
-  
-  function shuffleArray(array: []) {
-    const newArray = [...array]
-    const length = newArray.length
-  
-    for (let start = 0; start < length; start++) {
-      const randomPosition = Math.floor((newArray.length - start) * Math.random())
-      const randomItem = newArray.splice(randomPosition, 1)
-  
-      newArray.push(...randomItem)
-    }
-  
-    return newArray
-  }
   
   useEffect(() => {
     const updatedData = {...data, isWinning: true}
