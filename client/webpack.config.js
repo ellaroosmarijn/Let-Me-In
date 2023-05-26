@@ -36,6 +36,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    fallback: { stream: false },
   },
   devtool: 'source-map',
 }
