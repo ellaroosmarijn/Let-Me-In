@@ -1,4 +1,9 @@
 {
   "buildCommand": "npm run build",
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }],
+  "functions": {
+    "api/(.*)": {
+      "includeFiles": "/api/*"
+    }
+  }
 }
