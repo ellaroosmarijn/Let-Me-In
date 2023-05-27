@@ -11,7 +11,7 @@ import uploadsRoutes from './routes/uploads'
 const server = express()
 
 server.use(express.json())
-server.use(express.static(join(__dirname, 'public')))
+server.use(express.static(join(__dirname, '..', 'dist', 'public')))
 
 server.use('/api/v1/home', homeRoutes)
 server.use('/api/v1/play', playRoutes)
@@ -21,7 +21,7 @@ server.use('/api/v1/create', createRoutes)
 server.use('/api/v1/uploads', uploadsRoutes)
 
 server.get('*', (req, res) => {
-  res.sendFile(resolve('server/public/index.html'))
+  res.sendFile(resolve('dist/public/index.html'))
 })
 
 export default server

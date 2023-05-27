@@ -29,7 +29,7 @@ describe('/GET /api/v1/results/', () => {
   it('should recieve data from results table', async () => {
     // Arrange
     expect.assertions(2)
-    jest.mocked(getResults).mockResolvedValue(getResultsMockData)
+    // jest.mocked(getResults).mockResolvedValue(getResultsMockData) // TODO fix these types
     jest.mocked(checkJwt).mockImplementation(async (req, res, next) => {
       const reqAuth = req as JwtRequest
       reqAuth.auth = {

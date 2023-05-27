@@ -76,7 +76,7 @@ function Create() {
         <Button
           data-disabled
           sx={{ '&[data-disabled]': { pointerEvents: 'all' } }}
-          onClick={(event) => event.preventDefault()}
+          onClick={(event: React.MouseEvent) => event.preventDefault()}
           aria-describedby="upload"
         >
           Upload

@@ -2,7 +2,7 @@
   "name": "letmein",
   "version": "1.0.0",
   "description": "Zoom waiting room game.",
-  "main": "server/api/index.ts",
+  "main": "dist/api/index.js",
   "license": "MIT",
   "author": "tohora2023",
   "keywords": [
@@ -11,13 +11,13 @@
     "in"
   ],
   "scripts": {
-    "start": "ts-node server/api/index.ts",
+    "start": "node dist/api/index.js",
     "dev": "run-p dev:client dev:server",
     "dev:client": "npm run webpack -- --watch",
-    "dev:server": "nodemon --watch server server/api/index.ts",
+    "dev:server": "nodemon --watch server server/index.ts",
     "build": "run-p build:client build:server",
     "build:client": "npm run webpack -- --mode production",
-    "build:server": "npm run knex -- migrate:latest",
+    "build:server": "tsc -p tsconfig.server.json",
     "knex": "knex --knexfile ./server/db/knexfile.js",
     "webpack": "webpack --config ./client/webpack.config.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
