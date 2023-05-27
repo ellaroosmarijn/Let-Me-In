@@ -11,7 +11,14 @@ import uploadsRoutes from './routes/uploads'
 const server = express()
 
 server.use(express.json())
-server.use(express.static(join(__dirname, '..', 'dist', 'public')))
+
+let staticDirPath = ''
+if (process.env.NODE_ENV === 'production') {
+  staticDirPath = join(__dirname, '..', '..', 'public') // accessed from the dist/api/server directory
+} else {
+  staticDirPath = join(__dirname, '..', 'dist', 'public') // accessed from the server directory
+}
+server.use(express.static(staticDirPath))
 
 server.use('/api/v1/home', homeRoutes)
 server.use('/api/v1/play', playRoutes)

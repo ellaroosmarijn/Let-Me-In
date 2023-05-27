@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "allowJs": true,
 
-    "outDir": "./dist",
+    "outDir": "./dist/api",
 
     /* Type Checking */
     "strict": true
