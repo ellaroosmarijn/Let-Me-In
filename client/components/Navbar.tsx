@@ -1,5 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { KeyboardEvent } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import { KeyboardEvent } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Navbar() {

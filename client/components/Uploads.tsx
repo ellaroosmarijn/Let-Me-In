@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { useEffect } from 'react'
 import { fetchUploads } from '../actions/uploads'
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'

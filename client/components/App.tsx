@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import Navbar from './Navbar'
@@ -10,7 +12,7 @@ import Uploads from './Uploads'
 
 export default function App() {
   return (
-    <div className="app">
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -20,6 +22,6 @@ export default function App() {
         <Route path="/create" element={<Create />} />
         <Route path="/uploads" element={<Uploads />} />
       </Routes>
-    </div>
+    </>
   )
 }
