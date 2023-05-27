@@ -1,22 +1,16 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { addImage } from '../actions/create'
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { useAuth0 } from '@auth0/auth0-react'
-import {
-  Button,
-  Space,
-  Tabs,
-  Text,
-  Textarea,
-  TextInput,
-  Title,
-} from '@mantine/core'
+import TextareaAutosize from 'react-textarea-autosize'
 
-function Create() {
+export default function Create() {
   const dispatch = useAppDispatch()
   const { error, loading } = useAppSelector((state) => state.create)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState('')
+  const [url, setUrl] = useState(false)
+  const [uploadImage, setUploadImage] = useState(false)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const { getAccessTokenSilently } = useAuth0()
@@ -65,25 +59,29 @@ function Create() {
   }
 
   function FormButton() {
-    if (loading) {
+    if (loading === true) {
       return (
-        <Button type="submit" loading>
+        <button className="uploading-button" type="submit">
           Uploading
-        </Button>
+        </button>
       )
     } else if (checkForEmptyInputs()) {
       return (
-        <Button
+        <button
+          className="disabled-button"
           data-disabled
-          sx={{ '&[data-disabled]': { pointerEvents: 'all' } }}
           onClick={(event: React.MouseEvent) => event.preventDefault()}
           aria-describedby="upload"
         >
           Upload
-        </Button>
+        </button>
       )
     }
-    return <Button type="submit">Upload</Button>
+    return (
+      <button className="button" type="submit">
+        Upload
+      </button>
+    )
   }
 
   if (error) {
@@ -93,59 +91,88 @@ function Create() {
   return (
     <>
       <div className="form-container">
-        <Title>Create your own entry</Title>
-        <Text>Fill out the form to add your own meme to the selection.</Text>
-        <Space h="md" />
+        <h1 className="title">Create your own entry</h1>
+        <div className="text">
+          Fill out the form to add your own meme to the selection.
+        </div>
         <form onSubmit={handleSubmit} name="uploadImageForm">
-          <TextInput
-            label="Title"
+          <label className="form-label" htmlFor="meme-title">
+            Title:
+          </label>
+          <input
+            className="form-input"
+            id="meme-title"
+            name="Title"
             type="text"
-            id="imageName"
-            name="imageName"
+            placeholder="Title"
             value={name}
             onChange={handleNameChange}
             required={true}
           />
-          <Textarea
-            label="Description"
+          <label className="form-label" htmlFor="meme-title">
+            Description:
+          </label>
+          <TextareaAutosize
+            className="form-input"
+            placeholder="Description"
             id="description"
-            name="description"
+            name="Description"
             value={description}
             onChange={handleDescriptionChange}
             required={true}
           />
-          <Space h="sm" />
-          <Tabs defaultValue="upload">
-            <Tabs.List>
-              <Tabs.Tab value="upload">Upload File</Tabs.Tab>
-              <Tabs.Tab value="url">Use URL</Tabs.Tab>
-            </Tabs.List>
-
-            <Tabs.Panel value="upload" pt="xs">
+          {url ? (
+            <>
+              <label className="form-label" htmlFor="meme-title">
+                Image URL:
+              </label>
               <input
-                type="file"
-                name="imageUpload"
-                role="button"
-                onChange={handleFileUpload}
-              />
-            </Tabs.Panel>
-
-            <Tabs.Panel value="url" pt="xs">
-              <TextInput
-                label="Image URL"
+                className="form-input"
+                placeholder="Image URL"
+                id="image-url"
                 type="text"
                 value={imageUrl}
                 onChange={handleImageUrlChange}
                 name="Image URL"
                 role="button"
               />
-            </Tabs.Panel>
-          </Tabs>
-          <Space h="lg" />
-          <FormButton />
+              <FormButton />
+              <div className="padding-bottom" />
+            </>
+          ) : (
+            <button
+              className="secondary-button"
+              onClick={() => {
+                setUrl(true)
+              }}
+            >
+              ImageURL
+            </button>
+          )}
+          {uploadImage ? (
+            <>
+              <div className="padding-top" />
+              <input
+                type="file"
+                name="imageUpload"
+                role="button"
+                onChange={handleFileUpload}
+              />
+              <div className="padding-above-formbutton" />
+              <FormButton />
+            </>
+          ) : (
+            <button
+              className="secondary-button"
+              onClick={() => {
+                setUploadImage(true)
+              }}
+            >
+              Upload
+            </button>
+          )}
         </form>
       </div>
     </>
   )
 }
-export default Create

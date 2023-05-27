@@ -3,3 +3,97 @@
   margin: 25px auto;
   padding: 10px 30px;
 }
+
+.button {
+  background-color: #3D83F7;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+}
+
+.disabled-button{
+  background-color: #44444438;
+  font-weight: 600;
+  color: #444444;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  cursor: not-allowed;
+}
+
+.uploading-button{
+  background-color: #3D83F738;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  cursor: not-allowed;
+}
+
+.title{
+  font-family: 'Roboto', sans-serif; 
+  color: #666666;
+}
+
+.text{
+  font-size: large;
+  font-family: 'Roboto', sans-serif; 
+  color: #666666;
+  padding-bottom: 1rem;
+}
+
+.form-input{
+display: inline-block;
+margin: 0.5rem 0;
+background-color: #ffffff;
+font-family: 'Roboto', sans-serif; 
+font-weight: 400;
+min-height: 2em;
+border-color: #44444481;
+border-width: 1px;
+width: 100%;
+padding: 0.5rem 0.75rem;
+box-sizing: border-box;
+color: #000000;
+
+  &::placeholder {
+  color: #44444481;
+}
+}
+
+.form-label{
+  color: #000000;
+  font-size: medium;
+}
+
+#description{
+  margin-bottom: 1rem;
+}
+
+.divider{
+  background-color: #44444481;
+  padding: 0.5px;
+}
+
+.secondary-button{
+  padding: 0.5rem 1.25rem;
+  margin-right: 1rem;
+  background-color: #3d84f732;
+  font-weight: 600;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+}
+
+.padding-bottom{
+  padding-bottom: 1rem;
+}
+
+.padding-top{
+  padding-top: 1rem;
+}
+
+.padding-above-formbutton{
+  padding-bottom: 0.5rem;
+}
